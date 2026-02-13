@@ -125,6 +125,17 @@
   }
 }
 
+/* Hide page-level scrollbars — layout is a fixed bento grid */
+html,
+body {
+  overflow: hidden;
+  scrollbar-width: none; /* Firefox */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome / Safari / Edge */
+}
+
 /* ── Typography ──────────────────────────────────────── */
 @layer components {
   /* Hero / display heading — largest, for the main hero area */

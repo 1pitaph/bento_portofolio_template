@@ -1,9 +1,5 @@
 # Portal - Portfolio
 
-很好，我帮你把这段话改成更自然、专业，同时保持你那种轻松一点的语气 👇
-
-✨ Refined Version
-
 Hi! This is a bento-style portfolio page designed by me and developed collaboratively with AI. Feel free to clone this repository to use, customize, or even improve it for your own projects.
 
 Sanity CMS is integrated (mainly because I wanted to explore working with a CMS), but it’s completely optional.Content can be served either from Sanity or from a local static file (data/content.ts), controlled by a single environment variable. You can run and deploy the site without configuring Sanity. Please check the setup instructions below — they were generated with AI assistance, but they’re clear and tested step by step.

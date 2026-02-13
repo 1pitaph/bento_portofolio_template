@@ -1,5 +1,5 @@
-import type { HeroData } from "@/data/types";
-import RotatingText from "@/components/ReactBits/RotatingText";
+import type { HeroData } from "@/types";
+import RotatingText from "@/components/animations/RotatingText";
 
 type HeroSectionProps = {
   data: HeroData;

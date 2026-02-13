@@ -1,9 +1,19 @@
+/**
+ * Animated section heading with a black underline wipe effect on hover.
+ *
+ * On hover a full-width black bar slides in from the left, and the text
+ * colour transitions to white, creating an inverse highlight. Typically used
+ * as the clickable trigger that expands a section into an `ExpandedOverlay`.
+ *
+ * @prop children - Heading text content.
+ * @prop onClick  - Optional callback fired when the heading is clicked.
+ */
 type SectionHeadingProps = {
   children: React.ReactNode;
   onClick?: () => void;
 };
 
-export function SectionHeading_Clickable({
+export function SectionHeadingClickable({
   children,
   onClick,
 }: SectionHeadingProps) {

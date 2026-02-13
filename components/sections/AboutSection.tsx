@@ -1,6 +1,6 @@
-import type { AboutData } from "@/data/types";
-import { CloseButton } from "./ui/CloseButton";
-import { SectionHeading_Clickable } from "./ui/SectionHeading_Clickable";
+import type { AboutData } from "@/types";
+import { CloseButton } from "@/components/ui/CloseButton";
+import { SectionHeadingClickable } from "@/components/ui/SectionHeadingClickable";
 
 type AboutSectionProps = {
   data: AboutData;
@@ -29,9 +29,9 @@ export function AboutSection({
             />
           </div>
           <div className="md:w-3/5">
-            <SectionHeading_Clickable onClick={onExpand}>
+            <SectionHeadingClickable onClick={onExpand}>
               {`About Me`}
-            </SectionHeading_Clickable>
+            </SectionHeadingClickable>
             <p className="text-body leading-relaxed text-black md:text-lg md:leading-relaxed">
               {data.text}
             </p>
@@ -44,9 +44,9 @@ export function AboutSection({
   return (
     <div className="h-full">
       <div className="flex items-center justify-between">
-        <SectionHeading_Clickable onClick={onExpand}>
+        <SectionHeadingClickable onClick={onExpand}>
           {`About Me`}
-        </SectionHeading_Clickable>
+        </SectionHeadingClickable>
       </div>
 
       <div className="mt-3 flex items-start gap-3 sm:mt-4 sm:gap-4 xl:gap-6">

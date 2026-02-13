@@ -1,11 +1,24 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect, RefObject } from "react";
+import {
+  PANEL_CONSTRAINTS,
+  DEFAULT_PANEL_SIZES,
+  PANEL_LERP_FACTOR,
+} from "@/lib/constants";
 
+/**
+ * Current rendered sizes of the four resizable panels (all values are
+ * percentages of the container's width or height).
+ */
 export type PanelSizes = {
+  /** Height of the top row (Hero/Skills) as % of total container height */
   topHeight: number;
+  /** Width of the Hero panel as % of total container width */
   topLeftWidth: number;
+  /** Width of the Work panel as % of total container width */
   bottomLeftWidth: number;
+  /** Height of the About panel as % of the bottom-right column height */
   bottomRightTopHeight: number;
 };
 
@@ -16,29 +29,27 @@ type DividerType =
   | "horizontal-bottom-right"
   | null;
 
-const CONSTRAINTS = {
-  minTopHeight: 15,
-  maxTopHeight: 40,
-  minLeftWidth: 30,
-  maxLeftWidth: 70,
-  minAboutHeight: 30,
-  maxAboutHeight: 70,
-};
-
-const LERP_FACTOR = 0.15;
-
-const DEFAULT_SIZES: PanelSizes = {
-  topHeight: 25,
-  topLeftWidth: 55,
-  bottomLeftWidth: 40,
-  bottomRightTopHeight: 60,
-};
-
+/**
+ * Manages drag state and LERP-animated sizes for the four resizable panels
+ * in `LaptopLayout`.
+ *
+ * When a user drags a divider, the target size updates immediately and the
+ * displayed size lerps toward it on each animation frame, producing a smooth
+ * damped-follow effect. Panel constraints are defined in `@/lib/constants`.
+ *
+ * @param containerRef - Ref to the outer container `<div>` used to convert
+ *   absolute mouse coordinates to percentages.
+ * @returns
+ *   - `sizes` — current rendered panel sizes
+ *   - `isDragging` — which divider is active, or `null`
+ *   - `handleMouseDown` — factory that returns a `mousedown` handler for a
+ *     given divider type
+ */
 export function useResizablePanels(
   containerRef: RefObject<HTMLDivElement | null>,
 ) {
-  const [sizes, setSizes] = useState<PanelSizes>(DEFAULT_SIZES);
-  const targetSizes = useRef<PanelSizes>({ ...DEFAULT_SIZES });
+  const [sizes, setSizes] = useState<PanelSizes>({ ...DEFAULT_PANEL_SIZES });
+  const targetSizes = useRef<PanelSizes>({ ...DEFAULT_PANEL_SIZES });
   const rafId = useRef<number | null>(null);
   const [isDragging, setIsDragging] = useState<DividerType>(null);
 
@@ -58,20 +69,20 @@ export function useResizablePanels(
       if (isDragging === "horizontal-main") {
         const newTopHeight = ((e.clientY - rect.top) / rect.height) * 100;
         targetSizes.current.topHeight = Math.min(
-          CONSTRAINTS.maxTopHeight,
-          Math.max(CONSTRAINTS.minTopHeight, newTopHeight),
+          PANEL_CONSTRAINTS.maxTopHeight,
+          Math.max(PANEL_CONSTRAINTS.minTopHeight, newTopHeight),
         );
       } else if (isDragging === "vertical-top") {
         const newLeftWidth = ((e.clientX - rect.left) / rect.width) * 100;
         targetSizes.current.topLeftWidth = Math.min(
-          CONSTRAINTS.maxLeftWidth,
-          Math.max(CONSTRAINTS.minLeftWidth, newLeftWidth),
+          PANEL_CONSTRAINTS.maxLeftWidth,
+          Math.max(PANEL_CONSTRAINTS.minLeftWidth, newLeftWidth),
         );
       } else if (isDragging === "vertical-bottom") {
         const newLeftWidth = ((e.clientX - rect.left) / rect.width) * 100;
         targetSizes.current.bottomLeftWidth = Math.min(
-          CONSTRAINTS.maxLeftWidth,
-          Math.max(CONSTRAINTS.minLeftWidth, newLeftWidth),
+          PANEL_CONSTRAINTS.maxLeftWidth,
+          Math.max(PANEL_CONSTRAINTS.minLeftWidth, newLeftWidth),
         );
       } else if (isDragging === "horizontal-bottom-right") {
         const topOffset = (targetSizes.current.topHeight / 100) * rect.height;
@@ -79,8 +90,8 @@ export function useResizablePanels(
         const mouseY = e.clientY - rect.top - topOffset;
         const newAboutHeight = (mouseY / bottomHeight) * 100;
         targetSizes.current.bottomRightTopHeight = Math.min(
-          CONSTRAINTS.maxAboutHeight,
-          Math.max(CONSTRAINTS.minAboutHeight, newAboutHeight),
+          PANEL_CONSTRAINTS.maxAboutHeight,
+          Math.max(PANEL_CONSTRAINTS.minAboutHeight, newAboutHeight),
         );
       }
     },
@@ -109,22 +120,22 @@ export function useResizablePanels(
           topHeight: lerp(
             prev.topHeight,
             targetSizes.current.topHeight,
-            LERP_FACTOR,
+            PANEL_LERP_FACTOR,
           ),
           topLeftWidth: lerp(
             prev.topLeftWidth,
             targetSizes.current.topLeftWidth,
-            LERP_FACTOR,
+            PANEL_LERP_FACTOR,
           ),
           bottomLeftWidth: lerp(
             prev.bottomLeftWidth,
             targetSizes.current.bottomLeftWidth,
-            LERP_FACTOR,
+            PANEL_LERP_FACTOR,
           ),
           bottomRightTopHeight: lerp(
             prev.bottomRightTopHeight,
             targetSizes.current.bottomRightTopHeight,
-            LERP_FACTOR,
+            PANEL_LERP_FACTOR,
           ),
         };
       });
@@ -146,9 +157,7 @@ export function useResizablePanels(
     if (isDragging) {
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
-      document.body.style.cursor = isDragging.startsWith("horizontal")
-        ? "row-resize"
-        : "col-resize";
+      document.body.style.cursor = "grabbing";
       document.body.style.userSelect = "none";
     }
 

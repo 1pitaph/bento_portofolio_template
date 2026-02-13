@@ -3,6 +3,20 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ReactNode } from "react";
 
+/**
+ * Full-screen overlay that animates in/out using a Framer Motion clip-path
+ * transition, creating the illusion that the overlay expands out of the
+ * source panel that was clicked.
+ *
+ * @prop isOpen    - Controls AnimatePresence visibility.
+ * @prop clipFrom  - CSS `inset()` string for the initial/exit clip-path (the
+ *   panel's screen position). Obtain via `getClipFrom` in `@/lib/animation`.
+ * @prop children  - Content rendered inside the overlay (the expanded section).
+ * @prop padding   - Tailwind padding class for the inner scroll container.
+ *   Defaults to `"p-6"`.
+ * @prop uniqueKey - Stable key for `<motion.div>` to drive AnimatePresence
+ *   exit/enter cycle correctly when the same overlay re-opens.
+ */
 type ExpandedOverlayProps = {
   isOpen: boolean;
   clipFrom: string;

@@ -1,17 +1,17 @@
 "use client";
 
 import { useState, useRef } from "react";
-import type { SiteData } from "@/data/types";
+import type { SiteData } from "@/types";
 import {
   HeroSection,
   SkillsSection,
   WorkSection,
   AboutSection,
   ContactSection,
-  SectionHeading_Clickable,
-  getClipFrom,
-} from "./sections";
-import ExpandedOverlay from "./sections/ui/ExpandedOverlay";
+} from "@/components/sections";
+import { SectionHeadingClickable } from "@/components/ui/SectionHeadingClickable";
+import { getClipFrom } from "@/lib/animation";
+import ExpandedOverlay from "@/components/ui/ExpandedOverlay";
 
 type MobileLayoutProps = {
   siteData: SiteData;
@@ -77,9 +77,9 @@ export default function MobileLayout({
           ref={workRef}
           className="flex cursor-pointer items-center justify-between overflow-hidden border-b border-black bg-white px-6 transition-colors duration-200 hover:bg-gray-50"
         >
-          <SectionHeading_Clickable onClick={handleWorkExpand}>
+          <SectionHeadingClickable onClick={handleWorkExpand}>
             Work
-          </SectionHeading_Clickable>
+          </SectionHeadingClickable>
           <div onClick={handleWorkExpand} className="text-xl">
             +
           </div>
@@ -90,9 +90,9 @@ export default function MobileLayout({
           ref={aboutRef}
           className="flex cursor-pointer items-center justify-between overflow-hidden border-b border-black bg-white px-6 transition-colors duration-200 hover:bg-gray-50"
         >
-          <SectionHeading_Clickable onClick={handleAboutExpand}>
+          <SectionHeadingClickable onClick={handleAboutExpand}>
             About Me
-          </SectionHeading_Clickable>
+          </SectionHeadingClickable>
           <div onClick={handleAboutExpand} className="text-xl">
             +
           </div>

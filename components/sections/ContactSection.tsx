@@ -1,4 +1,4 @@
-import type { ContactEntry } from "@/data/types";
+import type { ContactEntry } from "@/types";
 
 type ContactSectionProps = {
   data: ContactEntry[];

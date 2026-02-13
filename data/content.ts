@@ -4,10 +4,10 @@ import type {
   AboutData,
   ContactEntry,
   ProjectCategory,
-} from "./types";
+} from "@/types";
 
 // Re-export types so existing imports keep working.
-export type { ContactEntry, Project, ProjectCategory } from "./types";
+export type { ContactEntry, Project, ProjectCategory } from "@/types";
 
 // ─── Hero ────────────────────────────────────────────────────
 export const heroData: HeroData = {

@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useState, useCallback, useRef } from "react";
-import type { SiteData } from "@/data/types";
+import { useState, useCallback, useRef } from "react";
+import type { SiteData } from "@/types";
 import {
   HeroSection,
   SkillsSection,
   WorkSection,
   AboutSection,
   ContactSection,
-  getClipFrom,
-} from "./sections";
-import { useResizablePanels, useEntryAnimation } from "./hooks";
-import ExpandedOverlay from "./sections/ui/ExpandedOverlay";
+} from "@/components/sections";
+import { getClipFrom } from "@/lib/animation";
+import { useResizablePanels, useEntryAnimation } from "@/hooks";
+import ExpandedOverlay from "@/components/ui/ExpandedOverlay";
 
 type ResizableLayoutProps = {
   siteData: SiteData;
@@ -19,6 +19,25 @@ type ResizableLayoutProps = {
   setExpandedSection: (section: "work" | "about" | null) => void;
 };
 
+/**
+ * Four-panel resizable bento grid layout for desktop viewports (`md` and up).
+ *
+ * Layout structure:
+ * ```
+ * ┌──────────────┬───────────────┐
+ * │  HeroSection │ SkillsSection │  ← top row, draggable height
+ * ├──────────────┼───────────────┤
+ * │  WorkSection │ AboutSection  │  ← bottom row
+ * │              ├───────────────┤
+ * │              │ContactSection │
+ * └──────────────┴───────────────┘
+ * ```
+ *
+ * All four dividers are independently draggable with LERP damping via
+ * `useResizablePanels`. Entry animation is driven by `useEntryAnimation`.
+ * Expanded overlays for Work and About use `ExpandedOverlay` with clip-path
+ * transitions computed by `getClipFrom`.
+ */
 export default function ResizableLayout({
   siteData,
   expandedSection,
@@ -101,7 +120,7 @@ export default function ResizableLayout({
       >
         {/* Hero Section */}
         <div
-          className="relative h-full overflow-auto"
+          className="relative h-full overflow-hidden"
           style={{ width: `${sizes.topLeftWidth}%` }}
         >
           <div ref={heroContentRef} className="h-full p-4">
@@ -111,7 +130,7 @@ export default function ResizableLayout({
 
         {/* Vertical Divider (Top Section) */}
         <div
-          className="group relative z-10 flex h-full w-0 cursor-col-resize items-center justify-center"
+          className="group relative z-10 flex h-full w-4 -mx-2 cursor-grab items-center justify-center"
           onMouseDown={handleMouseDown("vertical-top")}
         >
           <div
@@ -126,7 +145,7 @@ export default function ResizableLayout({
 
         {/* Skills Section */}
         <div
-          className="relative h-full overflow-auto"
+          className="relative h-full overflow-hidden"
           style={{ width: `${100 - sizes.topLeftWidth}%` }}
         >
           <div ref={skillsContentRef} className="h-full p-4">
@@ -137,7 +156,7 @@ export default function ResizableLayout({
 
       {/* Horizontal Divider (Main - between Top and Bottom) */}
       <div
-        className="group absolute left-0 right-0 z-10 flex h-0 cursor-row-resize items-center justify-center"
+        className="group absolute left-0 right-0 z-10 flex h-4 -translate-y-2 cursor-grab items-center justify-center"
         style={{ top: `${sizes.topHeight}%` }}
         onMouseDown={handleMouseDown("horizontal-main")}
       >
@@ -159,7 +178,7 @@ export default function ResizableLayout({
         {/* Work Section (Left) */}
         <div
           ref={workPanelRef}
-          className="relative h-full overflow-auto"
+          className="relative h-full overflow-hidden"
           style={{ width: `${sizes.bottomLeftWidth}%` }}
         >
           <div ref={workContentRef} className="h-full p-4">
@@ -172,7 +191,7 @@ export default function ResizableLayout({
 
         {/* Vertical Divider (Bottom Section) */}
         <div
-          className="group relative z-10 flex h-full w-0 cursor-col-resize items-center justify-center"
+          className="group relative z-10 flex h-full w-4 -mx-2 cursor-grab items-center justify-center"
           onMouseDown={handleMouseDown("vertical-bottom")}
         >
           <div
@@ -193,7 +212,7 @@ export default function ResizableLayout({
           {/* About Section */}
           <div
             ref={aboutPanelRef}
-            className="absolute left-0 right-0 top-0 overflow-auto"
+            className="absolute left-0 right-0 top-0 overflow-hidden"
             style={{ height: `${sizes.bottomRightTopHeight}%` }}
           >
             <div ref={aboutContentRef} className="h-full p-4">
@@ -206,7 +225,7 @@ export default function ResizableLayout({
 
           {/* Horizontal Divider (About/Contact) */}
           <div
-            className="group absolute left-0 right-0 z-10 flex h-0 cursor-row-resize items-center justify-center"
+            className="group absolute left-0 right-0 z-10 flex h-4 -translate-y-2 cursor-grab items-center justify-center"
             style={{ top: `${sizes.bottomRightTopHeight}%` }}
             onMouseDown={handleMouseDown("horizontal-bottom-right")}
           >
@@ -222,7 +241,7 @@ export default function ResizableLayout({
 
           {/* Contact Section */}
           <div
-            className="absolute bottom-0 left-0 right-0 overflow-auto"
+            className="absolute bottom-0 left-0 right-0 overflow-hidden"
             style={{ height: `${100 - sizes.bottomRightTopHeight}%` }}
           >
             <div ref={contactContentRef} className="h-full p-4">

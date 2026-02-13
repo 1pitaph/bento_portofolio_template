@@ -1,5 +1,5 @@
-import type { SkillsData } from "@/data/types";
-import FallingText from "@/components/ReactBits/FallingText";
+import type { SkillsData } from "@/types";
+import FallingText from "@/components/animations/FallingText";
 
 type SkillsSectionProps = {
   data: SkillsData;

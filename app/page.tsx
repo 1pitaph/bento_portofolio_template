@@ -1,8 +1,8 @@
 import { getSiteData } from "@/lib/data";
-import ClientPage from "./ClientPage";
+import ClientLayout from "@/components/layouts/ClientLayout";
 
 export default async function Home() {
   const siteData = await getSiteData();
 
-  return <ClientPage siteData={siteData} />;
+  return <ClientLayout siteData={siteData} />;
 }

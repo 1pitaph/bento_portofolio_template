@@ -19,6 +19,21 @@ type AnimationRefs = {
   };
 };
 
+/**
+ * Runs a one-shot GSAP entrance animation on mount of `LaptopLayout`.
+ *
+ * Animation sequence:
+ * 1. Main horizontal divider line scales in from left (0.6 s).
+ * 2. Top and bottom vertical divider lines scale in from top (0.6 s, -0.2 s overlap).
+ * 3. Bottom-right horizontal divider line scales in from left (0.6 s, -0.2 s overlap).
+ * 4. All five content regions fade up from y+20 with a 0.1 s stagger (-0.3 s overlap).
+ *
+ * The GSAP context is cleaned up via `ctx.revert()` on component unmount,
+ * preventing memory leaks when the layout is unmounted.
+ *
+ * @param refs - Refs to the four divider `<div>` elements (`lines`) and the
+ *   five section content wrapper `<div>` elements (`content`).
+ */
 export function useEntryAnimation(refs: AnimationRefs) {
   useEffect(() => {
     const { lines, content } = refs;

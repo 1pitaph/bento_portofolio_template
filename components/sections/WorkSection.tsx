@@ -1,7 +1,7 @@
-import type { ProjectCategory } from "@/data/types";
-import { CloseButton } from "./ui/CloseButton";
-import { ProjectCard } from "./ui/ProjectCard";
-import { SectionHeading_Clickable } from "./ui/SectionHeading_Clickable";
+import type { ProjectCategory } from "@/types";
+import { CloseButton } from "@/components/ui/CloseButton";
+import { ProjectCard } from "@/components/ui/ProjectCard";
+import { SectionHeadingClickable } from "@/components/ui/SectionHeadingClickable";
 
 type WorkSectionProps = {
   data: ProjectCategory[];
@@ -17,9 +17,9 @@ export function WorkSection({
   return (
     <div className="relative h-full">
       <div className="flex items-center justify-between">
-        <SectionHeading_Clickable onClick={onExpand}>
+        <SectionHeadingClickable onClick={onExpand}>
           Work
-        </SectionHeading_Clickable>
+        </SectionHeadingClickable>
       </div>
       {isExpanded && <CloseButton onClick={onExpand} />}
       {data.map((group) => (
