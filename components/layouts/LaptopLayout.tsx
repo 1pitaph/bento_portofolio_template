@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef } from "react";
-import type { SiteData } from "@/types";
+import type { SiteData } from "@/re/types";
 import {
   HeroSection,
   SkillsSection,
@@ -27,10 +27,10 @@ type ResizableLayoutProps = {
  * ┌──────────────┬───────────────┐
  * │  HeroSection │ SkillsSection │  ← top row, draggable height
  * ├──────────────┼───────────────┤
- * │  WorkSection │ AboutSection  │  ← bottom row
- * │              ├───────────────┤
- * │              │ContactSection │
- * └──────────────┴───────────────┘
+ * │  WorkSection │   [empty]     │  ← top-right panel, draggable height
+ * │              ├───────┬───────┤
+ * │              │ About │Contact│  ← bottom-right row
+ * └──────────────┴───────┴───────┘
  * ```
  *
  * All four dividers are independently draggable with LERP damping via
@@ -81,6 +81,7 @@ export default function ResizableLayout({
   const topVLineRef = useRef<HTMLDivElement>(null);
   const bottomVLineRef = useRef<HTMLDivElement>(null);
   const bottomRightHLineRef = useRef<HTMLDivElement>(null);
+  const bottomRightContactVLineRef = useRef<HTMLDivElement>(null);
 
   // Animation refs for content
   const heroContentRef = useRef<HTMLDivElement>(null);
@@ -96,6 +97,7 @@ export default function ResizableLayout({
       topVLine: topVLineRef,
       bottomVLine: bottomVLineRef,
       bottomRightHLine: bottomRightHLineRef,
+      bottomRightContactVLine: bottomRightContactVLineRef,
     },
     content: {
       hero: heroContentRef,
@@ -135,11 +137,10 @@ export default function ResizableLayout({
         >
           <div
             ref={topVLineRef}
-            className={`absolute h-full w-px origin-top bg-black ${
-              isDragging === "vertical-top"
+            className={`absolute h-full w-px origin-top bg-black ${isDragging === "vertical-top"
                 ? "w-1 bg-gray-400"
                 : "group-hover:w-1 group-hover:bg-gray-400"
-            }`}
+              }`}
           />
         </div>
 
@@ -162,11 +163,10 @@ export default function ResizableLayout({
       >
         <div
           ref={mainHLineRef}
-          className={`absolute h-px w-full origin-left bg-black ${
-            isDragging === "horizontal-main"
+          className={`absolute h-px w-full origin-left bg-black ${isDragging === "horizontal-main"
               ? "h-1 bg-gray-400"
               : "group-hover:h-1 group-hover:bg-gray-400"
-          }`}
+            }`}
         />
       </div>
 
@@ -196,11 +196,10 @@ export default function ResizableLayout({
         >
           <div
             ref={bottomVLineRef}
-            className={`absolute h-full w-px origin-top bg-black ${
-              isDragging === "vertical-bottom"
+            className={`absolute h-full w-px origin-top bg-black ${isDragging === "vertical-bottom"
                 ? "w-1 bg-gray-400"
                 : "group-hover:w-1 group-hover:bg-gray-400"
-            }`}
+              }`}
           />
         </div>
 
@@ -209,18 +208,12 @@ export default function ResizableLayout({
           className="relative h-full"
           style={{ width: `${100 - sizes.bottomLeftWidth}%` }}
         >
-          {/* About Section */}
+          {/* Top Right Panel (empty) */}
           <div
-            ref={aboutPanelRef}
             className="absolute left-0 right-0 top-0 overflow-hidden"
             style={{ height: `${sizes.bottomRightTopHeight}%` }}
           >
-            <div ref={aboutContentRef} className="h-full p-4">
-              <AboutSection
-                data={siteData.about}
-                onExpand={handleAboutExpand}
-              />
-            </div>
+            <div className="h-full w-full" />
           </div>
 
           {/* Horizontal Divider (About/Contact) */}
@@ -231,21 +224,54 @@ export default function ResizableLayout({
           >
             <div
               ref={bottomRightHLineRef}
-              className={`absolute h-px w-full origin-left bg-black ${
-                isDragging === "horizontal-bottom-right"
+              className={`absolute h-px w-full origin-left bg-black ${isDragging === "horizontal-bottom-right"
                   ? "h-1 bg-gray-400"
                   : "group-hover:h-1 group-hover:bg-gray-400"
-              }`}
+                }`}
             />
           </div>
 
-          {/* Contact Section */}
+          {/* Contact Section Group */}
           <div
-            className="absolute bottom-0 left-0 right-0 overflow-hidden"
+            className="absolute bottom-0 left-0 right-0 flex"
             style={{ height: `${100 - sizes.bottomRightTopHeight}%` }}
           >
-            <div ref={contactContentRef} className="h-full p-4">
-              <ContactSection data={siteData.contact} />
+            {/* About Panel (Left) */}
+            <div
+              ref={aboutPanelRef}
+              className="relative h-full overflow-hidden"
+              style={{ width: `${sizes.aboutLeftWidth}%` }}
+            >
+              <div ref={aboutContentRef} className="h-full p-4">
+                <AboutSection
+                  data={siteData.about}
+                  onExpand={handleAboutExpand}
+                />
+              </div>
+            </div>
+
+            {/* Vertical Divider (About | Contact) */}
+            <div
+              className="group relative z-10 flex h-full w-4 -mx-2 bg-transparent cursor-grab items-center justify-center isolate"
+              onMouseDown={handleMouseDown("vertical-bottom-right-contact")}
+            >
+              <div
+                ref={bottomRightContactVLineRef}
+                className={`absolute h-full w-px origin-top z-[-1] bg-black ${isDragging === "vertical-bottom-right-contact"
+                    ? "w-1 bg-gray-400"
+                    : "group-hover:w-1 group-hover:bg-gray-400"
+                  }`}
+              />
+            </div>
+
+            {/* Contact Panel (Right) */}
+            <div
+              className="relative h-full overflow-hidden"
+              style={{ width: `${100 - sizes.aboutLeftWidth}%` }}
+            >
+              <div ref={contactContentRef} className="h-full p-4">
+                <ContactSection data={siteData.contact} />
+              </div>
             </div>
           </div>
         </div>

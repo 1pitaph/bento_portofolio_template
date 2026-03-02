@@ -1,4 +1,4 @@
-import type { AboutData } from "@/types";
+import type { AboutData } from "@/re/types";
 import { CloseButton } from "@/components/ui/CloseButton";
 import { SectionHeadingClickable } from "@/components/ui/SectionHeadingClickable";
 
@@ -20,21 +20,10 @@ export function AboutSection({
 
         {/* Mobile: stacked layout / Desktop: side-by-side */}
         <div className="flex h-full flex-col md:flex-row md:items-center md:gap-12 lg:gap-12 m-12">
-          <div className="flex shrink-0 items-center justify-center py-6 md:w-2/5 md:py-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={data.image}
-              alt={data.imageAlt}
-              className="h-48 w-48 object-contain sm:h-56 sm:w-56 md:h-72 md:w-72 lg:h-80 lg:w-80"
-            />
-          </div>
           <div className="md:w-3/5">
             <SectionHeadingClickable onClick={onExpand}>
               {`About Me`}
             </SectionHeadingClickable>
-            <p className="text-body leading-relaxed text-black md:text-lg md:leading-relaxed">
-              {data.text}
-            </p>
           </div>
         </div>
       </div>
@@ -47,18 +36,6 @@ export function AboutSection({
         <SectionHeadingClickable onClick={onExpand}>
           {`About Me`}
         </SectionHeadingClickable>
-      </div>
-
-      <div className="mt-3 flex items-start gap-3 sm:mt-4 sm:gap-4 xl:gap-6">
-        <div className="relative h-24 w-24 shrink-0 sm:h-32 sm:w-32 md:h-40 md:w-40 xl:h-56 xl:w-56">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={data.image}
-            alt={data.imageAlt}
-            className="h-full w-full object-contain"
-          />
-        </div>
-        <p className="flex-1 text-body text-black">{data.text}</p>
       </div>
     </div>
   );

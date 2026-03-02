@@ -1,4 +1,4 @@
-import type { HeroData } from "@/types";
+import type { HeroData } from "@/re/types";
 import RotatingText from "@/components/animations/RotatingText";
 
 type HeroSectionProps = {

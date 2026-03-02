@@ -4,10 +4,10 @@ import type {
   AboutData,
   ContactEntry,
   ProjectCategory,
-} from "@/types";
+} from "@/re/types";
 
 // Re-export types so existing imports keep working.
-export type { ContactEntry, Project, ProjectCategory } from "@/types";
+export type { ContactEntry, Project, ProjectCategory } from "@/re/types";
 
 // ─── Hero ────────────────────────────────────────────────────
 export const heroData: HeroData = {
@@ -17,8 +17,8 @@ export const heroData: HeroData = {
 
 // ─── Skills ──────────────────────────────────────────────────
 export const skillsData: SkillsData = {
-  skills: "claude, chatgpt, copilot, openclaw, gemini, deepseek ",
-  highlights: ["claude", "chatgpt"],
+  skills: "VibeCoding Agent LangChain Python Figma Rhino SU Blender Houdini",
+  highlights: ["VibeCoding", "Agent", "LangChain", "Figma"],
 };
 
 // ─── About ───────────────────────────────────────────────────
@@ -32,8 +32,15 @@ export const aboutData: AboutData = {
 export const contactData: ContactEntry[] = [
   {
     type: "Email",
-    value: "xxxxxxxx@g123.com",
-    href: "mailto:xxxxxxxx@g123.com",
+    value: "xzltxy@163.com",
+    href: "mailto:xzltxy@163.com",
+    icon: "mail-tick",
+  },
+  {
+    type: "Phone",
+    value: "18500243104",
+    href: "tel:18500243104",
+    icon: "smartphone",
   },
 ];
 

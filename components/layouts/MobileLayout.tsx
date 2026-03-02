@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import type { SiteData } from "@/types";
+import type { SiteData } from "@/re/types";
 import {
   HeroSection,
   SkillsSection,
@@ -99,7 +99,7 @@ export default function MobileLayout({
         </div>
 
         {/* Contact Section */}
-        <div className="overflow-hidden bg-white px-6 py-6">
+        <div className="overflow-hidden bg-white px-6 py-6 relative flex flex-col min-h-[150px]">
           <ContactSection data={siteData.contact} />
         </div>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { SiteData } from "@/types";
+import type { SiteData } from "@/re/types";
 import MobileLayout from "./MobileLayout";
 import LaptopLayout from "./LaptopLayout";
 

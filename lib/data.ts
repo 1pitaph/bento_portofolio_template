@@ -1,4 +1,4 @@
-import type { SiteData } from "@/types";
+import type { SiteData } from "@/re/types";
 import {
   heroData,
   skillsData,

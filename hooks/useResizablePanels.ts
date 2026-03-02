@@ -18,8 +18,10 @@ export type PanelSizes = {
   topLeftWidth: number;
   /** Width of the Work panel as % of total container width */
   bottomLeftWidth: number;
-  /** Height of the About panel as % of the bottom-right column height */
+  /** Height of the top-right empty panel as % of the bottom-right column height */
   bottomRightTopHeight: number;
+  /** Width of the About panel in the bottom-right row as % of its container width */
+  aboutLeftWidth: number;
 };
 
 type DividerType =
@@ -27,6 +29,7 @@ type DividerType =
   | "vertical-top"
   | "vertical-bottom"
   | "horizontal-bottom-right"
+  | "vertical-bottom-right-contact"
   | null;
 
 /**
@@ -90,8 +93,17 @@ export function useResizablePanels(
         const mouseY = e.clientY - rect.top - topOffset;
         const newAboutHeight = (mouseY / bottomHeight) * 100;
         targetSizes.current.bottomRightTopHeight = Math.min(
-          PANEL_CONSTRAINTS.maxAboutHeight,
-          Math.max(PANEL_CONSTRAINTS.minAboutHeight, newAboutHeight),
+          PANEL_CONSTRAINTS.maxTopRightHeight,
+          Math.max(PANEL_CONSTRAINTS.minTopRightHeight, newAboutHeight),
+        );
+      } else if (isDragging === "vertical-bottom-right-contact") {
+        const leftOffset = (targetSizes.current.bottomLeftWidth / 100) * rect.width;
+        const contactWidth = rect.width - leftOffset;
+        const mouseX = e.clientX - rect.left - leftOffset;
+        const newContactWidth = (mouseX / contactWidth) * 100;
+        targetSizes.current.aboutLeftWidth = Math.min(
+          PANEL_CONSTRAINTS.maxAboutLeftWidth,
+          Math.max(PANEL_CONSTRAINTS.minAboutLeftWidth, newContactWidth),
         );
       }
     },
@@ -135,6 +147,11 @@ export function useResizablePanels(
           bottomRightTopHeight: lerp(
             prev.bottomRightTopHeight,
             targetSizes.current.bottomRightTopHeight,
+            PANEL_LERP_FACTOR,
+          ),
+          aboutLeftWidth: lerp(
+            prev.aboutLeftWidth,
+            targetSizes.current.aboutLeftWidth,
             PANEL_LERP_FACTOR,
           ),
         };

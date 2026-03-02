@@ -11,14 +11,18 @@ export const PANEL_CONSTRAINTS = {
   minLeftWidth: 30,
   /** Maximum % of viewport width for any left panel column */
   maxLeftWidth: 70,
-  /** Minimum % of the bottom-right column height for the About panel */
-  minAboutHeight: 30,
-  /** Maximum % of the bottom-right column height for the About panel */
-  maxAboutHeight: 70,
+  /** Minimum % of the bottom-right column height for the top-right panel */
+  minTopRightHeight: 30,
+  /** Maximum % of the bottom-right column height for the top-right panel */
+  maxTopRightHeight: 70,
+  /** Minimum % of the bottom-right row width for the About panel */
+  minAboutLeftWidth: 30,
+  /** Maximum % of the bottom-right row width for the About panel */
+  maxAboutLeftWidth: 70,
 } as const;
 
 /**
- * Default initial sizes for the four resizable panels (all in %).
+ * Default initial sizes for the resizable panels (all in %).
  * These are the values used on first render before any dragging occurs.
  */
 export const DEFAULT_PANEL_SIZES = {
@@ -26,6 +30,7 @@ export const DEFAULT_PANEL_SIZES = {
   topLeftWidth: 55,
   bottomLeftWidth: 40,
   bottomRightTopHeight: 60,
+  aboutLeftWidth: 50,
 } as const;
 
 /**

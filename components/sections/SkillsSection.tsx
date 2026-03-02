@@ -1,4 +1,4 @@
-import type { SkillsData } from "@/types";
+import type { SkillsData } from "@/re/types";
 import FallingText from "@/components/animations/FallingText";
 
 type SkillsSectionProps = {

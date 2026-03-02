@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { ProjectCategory } from "@/types";
+import type { ProjectCategory } from "@/re/types";
 import { CloseButton } from "@/components/ui/CloseButton";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { SectionHeadingClickable } from "@/components/ui/SectionHeadingClickable";

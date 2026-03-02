@@ -20,6 +20,7 @@ export type ContactEntry = {
   type: string;
   value: string;
   href: string;
+  icon?: string;
 };
 
 export type Project = {
