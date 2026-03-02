@@ -11,8 +11,8 @@ export type { ContactEntry, Project, ProjectCategory } from "@/types";
 
 // ─── Hero ────────────────────────────────────────────────────
 export const heroData: HeroData = {
-  greeting: "Hi, I am XXX",
-  titles: ["a template", "still a template", "just a template"],
+  greeting: "Hi, I am 1pitaph",
+  titles: ["if it's hard to learn", "it's a valuable knowledge", "..."],
 };
 
 // ─── Skills ──────────────────────────────────────────────────
@@ -38,16 +38,5 @@ export const contactData: ContactEntry[] = [
 ];
 
 // ─── Work / Projects ─────────────────────────────────────────
-export const projectCategories: ProjectCategory[] = [
-  {
-    category: "Web Development",
-    projects: [
-      {
-        title: "XXX",
-        image: "/projects/placeholder.png",
-        techStack: ["GSAP", "Three.js"],
-        href: "#",
-      },
-    ],
-  },
-];
+// category 字段需与筛选器名称对应：AI / 作品集 / 实际项目 / 摄影
+export const projectCategories: ProjectCategory[] = [];
