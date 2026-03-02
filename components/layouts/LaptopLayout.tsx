@@ -12,6 +12,7 @@ import {
 import { getClipFrom } from "@/lib/animation";
 import { useResizablePanels, useEntryAnimation } from "@/hooks";
 import ExpandedOverlay from "@/components/ui/ExpandedOverlay";
+import { StickyBoard } from "@/components/notes";
 
 type ResizableLayoutProps = {
   siteData: SiteData;
@@ -89,6 +90,7 @@ export default function ResizableLayout({
   const workContentRef = useRef<HTMLDivElement>(null);
   const aboutContentRef = useRef<HTMLDivElement>(null);
   const contactContentRef = useRef<HTMLDivElement>(null);
+  const notesContentRef = useRef<HTMLDivElement>(null);
 
   // Entry animation
   useEntryAnimation({
@@ -105,6 +107,7 @@ export default function ResizableLayout({
       work: workContentRef,
       about: aboutContentRef,
       contact: contactContentRef,
+      notes: notesContentRef,
     },
   });
 
@@ -208,12 +211,14 @@ export default function ResizableLayout({
           className="relative h-full"
           style={{ width: `${100 - sizes.bottomLeftWidth}%` }}
         >
-          {/* Top Right Panel (empty) */}
+          {/* Top Right Panel — Sticky Notes Board */}
           <div
             className="absolute left-0 right-0 top-0 overflow-hidden"
             style={{ height: `${sizes.bottomRightTopHeight}%` }}
           >
-            <div className="h-full w-full" />
+            <div ref={notesContentRef} className="h-full w-full" style={{ opacity: 0 }}>
+              <StickyBoard />
+            </div>
           </div>
 
           {/* Horizontal Divider (About/Contact) */}

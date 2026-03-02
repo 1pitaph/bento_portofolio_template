@@ -42,3 +42,26 @@ export type SiteData = {
   contact: ContactEntry[];
   projectCategories: ProjectCategory[];
 };
+
+// ─── Sticky Notes ─────────────────────────────────────────────
+
+export type NoteContentType = 'text' | 'quote' | 'snippet' | 'link';
+
+export interface NoteContent {
+  type: NoteContentType;
+  text: string;
+  label?: string;    // snippet header badge text
+  caption?: string;  // quote attribution
+  url?: string;      // link href
+}
+
+export interface StickyNoteData {
+  id: string;
+  x: number;         // initial left offset in px, relative to board
+  y: number;         // initial top offset in px, relative to board
+  rotation: number;  // initial rotation in degrees
+  width: number;     // initial width in px
+  height?: number;   // optional fixed height; auto-height if omitted
+  bg: string;        // CSS background color
+  content: NoteContent;
+}

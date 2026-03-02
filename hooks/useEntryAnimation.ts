@@ -17,6 +17,7 @@ type AnimationRefs = {
     work: RefObject<HTMLDivElement | null>;
     about: RefObject<HTMLDivElement | null>;
     contact: RefObject<HTMLDivElement | null>;
+    notes: RefObject<HTMLDivElement | null>;
   };
 };
 
@@ -39,6 +40,23 @@ export function useEntryAnimation(refs: AnimationRefs) {
   useEffect(() => {
     const { lines, content } = refs;
 
+    // 检查所有 refs 是否都已挂载
+    if (
+      !lines.mainHLine.current ||
+      !lines.topVLine.current ||
+      !lines.bottomVLine.current ||
+      !lines.bottomRightHLine.current ||
+      !lines.bottomRightContactVLine.current ||
+      !content.hero.current ||
+      !content.skills.current ||
+      !content.work.current ||
+      !content.about.current ||
+      !content.contact.current ||
+      !content.notes.current
+    ) {
+      return;
+    }
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
 
@@ -58,6 +76,7 @@ export function useEntryAnimation(refs: AnimationRefs) {
           content.work.current,
           content.about.current,
           content.contact.current,
+          content.notes.current,
         ],
         { opacity: 0, y: 20 },
       );
@@ -102,6 +121,7 @@ export function useEntryAnimation(refs: AnimationRefs) {
             content.work.current,
             content.about.current,
             content.contact.current,
+            content.notes.current,
           ],
           {
             opacity: 1,
