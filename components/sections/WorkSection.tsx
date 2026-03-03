@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
-import type { ProjectCategory } from "@/re/types";
+import type { ProjectCategory, Project } from "@/re/types";
 import { CloseButton } from "@/components/ui/CloseButton";
 import { WorkCard } from "@/components/ui/WorkCard";
+import { WorkCardModal } from "@/components/ui/WorkCardModal";
 import { SectionHeadingClickable } from "@/components/ui/SectionHeadingClickable";
 
 const FILTERS = ["AI", "作品集", "实际项目", "摄影"] as const;
@@ -14,6 +15,7 @@ type WorkSectionProps = {
   data: ProjectCategory[];
   onExpand?: () => void;
   isExpanded?: boolean;
+  compact?: boolean;
 };
 
 function flattenProjects(data: ProjectCategory[]) {
@@ -67,6 +69,7 @@ export function WorkSection({
   data,
   onExpand,
   isExpanded = false,
+  compact = false,
 }: WorkSectionProps) {
   const [activeFilter, setActiveFilter] = useState<Filter>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -74,6 +77,24 @@ export function WorkSection({
   const outerRef = useRef<HTMLDivElement>(null);
   const trackContainerRef = useRef<HTMLDivElement>(null);
   const [containerW, setContainerW] = useState(0);
+  const [trackH, setTrackH] = useState(0);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => { setMounted(true); }, []);
+
+  useEffect(() => {
+    if (!selectedProject) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setSelectedProject(null); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [selectedProject]);
+
+  // Expanded view: wheel-driven spring scroll
+  const expandedContainerRef = useRef<HTMLDivElement>(null);
+  const expandedContentRef = useRef<HTMLDivElement>(null);
+  const expandedScrollPos = useRef(0);
+  const [expandedAnimY, setExpandedAnimY] = useState(0);
 
   /* Filter logic — shared between views */
   const filteredData = activeFilter
@@ -84,16 +105,23 @@ export function WorkSection({
 
   const handleFilter = (filter: (typeof FILTERS)[number]) => {
     setActiveFilter((prev) => (prev === filter ? null : filter));
-    setCurrentIndex(0); // reset carousel position on filter change
+    setCurrentIndex(0);
+    // reset expanded scroll on filter change
+    expandedScrollPos.current = 0;
+    setExpandedAnimY(0);
   };
 
   /* Measure container width */
   useEffect(() => {
     const el = trackContainerRef.current;
     if (!el) return;
-    const ro = new ResizeObserver(() => setContainerW(el.offsetWidth));
+    const ro = new ResizeObserver(() => {
+      setContainerW(el.offsetWidth);
+      setTrackH(el.offsetHeight);
+    });
     ro.observe(el);
     setContainerW(el.offsetWidth);
+    setTrackH(el.offsetHeight);
     return () => ro.disconnect();
   }, []);
 
@@ -131,18 +159,60 @@ export function WorkSection({
     return () => el.removeEventListener("wheel", handleWheel);
   }, [isExpanded, navigate]);
 
+  /* Expanded view: wheel-driven spring scroll */
+  useEffect(() => {
+    if (!isExpanded) {
+      expandedScrollPos.current = 0;
+      setExpandedAnimY(0);
+      return;
+    }
+    const container = expandedContainerRef.current;
+    if (!container) return;
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const content = expandedContentRef.current;
+      const maxScroll = content
+        ? Math.max(0, content.scrollHeight - container.clientHeight)
+        : 0;
+      expandedScrollPos.current = Math.max(
+        0,
+        Math.min(expandedScrollPos.current + e.deltaY, maxScroll)
+      );
+      setExpandedAnimY(expandedScrollPos.current);
+    };
+
+    container.addEventListener("wheel", onWheel, { passive: false });
+    return () => container.removeEventListener("wheel", onWheel);
+  }, [isExpanded]);
+
   /* Sliding track position */
-  const cardW = containerW * CARD_RATIO;
+  // Cap card width so the card (aspect-[4/3]) never exceeds ~88% of track height
+  const maxByHeight = trackH > 0 ? (trackH * (4 / 3) * 0.88) : Infinity;
+  const cardW = Math.min(containerW * (compact ? 0.48 : CARD_RATIO), maxByHeight);
   const centerOffset = (containerW - cardW) / 2;
   const trackX = containerW > 0
     ? -(currentIndex * (cardW + GAP)) + centerOffset
     : 0;
 
   /* ─────────────────────────────────────────────────────── */
+  /* Project detail modal (portal)                           */
+  /* ─────────────────────────────────────────────────────── */
+  const modal = (
+    <WorkCardModal
+      project={selectedProject}
+      onClose={() => setSelectedProject(null)}
+      compact={compact}
+      mounted={mounted}
+    />
+  );
+
+  /* ─────────────────────────────────────────────────────── */
   /* Collapsed view                                          */
   /* ─────────────────────────────────────────────────────── */
   if (!isExpanded) {
     return (
+      <>
       <div
         ref={outerRef}
         className="relative flex h-full flex-col select-none"
@@ -206,7 +276,11 @@ export function WorkSection({
                       pointerEvents: dist === 0 ? "auto" : "none",
                     }}
                   >
-                    <WorkCard {...project} />
+                    <WorkCard
+                      {...project}
+                      compact={compact}
+                      onCardClick={() => setSelectedProject(project)}
+                    />
                   </div>
                 );
               })}
@@ -231,6 +305,8 @@ export function WorkSection({
             ))}
         </div>
       </div>
+      {modal}
+      </>
     );
   }
 
@@ -238,29 +314,43 @@ export function WorkSection({
   /* Expanded view                                           */
   /* ─────────────────────────────────────────────────────── */
   return (
-    <div className="relative h-full overflow-auto">
-      <div className="flex items-center justify-between">
-        <SectionHeadingClickable onClick={onExpand}>
-          Work
-        </SectionHeadingClickable>
-      </div>
-
-      <FilterBar activeFilter={activeFilter} onFilter={handleFilter} />
-
+    <>
+    <div ref={expandedContainerRef} className="relative h-full overflow-hidden">
+      {/* Close button stays fixed — outside the scrollable motion.div */}
       <CloseButton onClick={onExpand} />
 
-      {filteredData.map((group) => (
-        <div key={group.category} className="mb-4">
-          <p className="mt-4 mb-2 text-xs tracking-widest text-foreground/40 uppercase">
-            {group.category}
-          </p>
-          <div className="grid grid-cols-2 gap-6">
-            {group.projects.map((project) => (
-              <WorkCard key={project.title} {...project} />
-            ))}
-          </div>
+      <motion.div
+        ref={expandedContentRef}
+        animate={{ y: -expandedAnimY }}
+        transition={{ type: "spring", stiffness: 300, damping: 35 }}
+      >
+        <div className="flex items-center justify-between">
+          <SectionHeadingClickable onClick={onExpand}>
+            Work
+          </SectionHeadingClickable>
         </div>
-      ))}
+
+        <FilterBar activeFilter={activeFilter} onFilter={handleFilter} />
+
+        {filteredData.map((group) => (
+          <div key={group.category} className="mb-4">
+            <p className="mt-4 mb-2 text-xs tracking-widest text-foreground/40 uppercase">
+              {group.category}
+            </p>
+            <div className="grid gap-6 [grid-template-columns:repeat(auto-fill,minmax(260px,1fr))]">
+              {group.projects.map((project) => (
+                <WorkCard
+                  key={project.title}
+                  {...project}
+                  onCardClick={() => setSelectedProject(project)}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </motion.div>
     </div>
+    {modal}
+    </>
   );
 }

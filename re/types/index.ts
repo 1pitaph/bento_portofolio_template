@@ -31,6 +31,7 @@ export type Project = {
   images?: string[];    // photography: multiple photos (stacked card effect)
   techStack?: string[];
   href?: string;
+  pages?: number;       // number of detail pages in the modal (desktop); omit or 1 = no pagination
 };
 
 export type ProjectCategory = {

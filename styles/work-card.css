@@ -1,0 +1,13 @@
+/* ── Work Card Styles ─────────────────────────────────────── */
+
+/* Dot-grid background for text-only work cards */
+.work-card-dot-grid {
+  background-image: radial-gradient(circle, var(--dot-grid-color) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* Dot-grid background for work card modal (larger spacing) */
+.work-modal-dot-grid {
+  background-image: radial-gradient(circle, var(--dot-grid-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+}

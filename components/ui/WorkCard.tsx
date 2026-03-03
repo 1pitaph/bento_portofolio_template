@@ -3,28 +3,26 @@
 import Image from "next/image";
 import type { Project } from "@/re/types";
 
-type WorkCardProps = Project;
-
-/** Dot-grid background for text-only cards */
-const DOT_GRID: React.CSSProperties = {
-  backgroundImage: "radial-gradient(circle, var(--dot-grid-color) 1px, transparent 1px)",
-  backgroundSize: "18px 18px",
-};
+type WorkCardProps = Project & { compact?: boolean; onCardClick?: () => void };
 
 export function WorkCard({
   title,
   tagline,
   logo,
   image,
-  images,
   href,
+  techStack,
+  compact = false,
+  onCardClick,
 }: WorkCardProps) {
-  // Use first image from either images[] or image
-  const coverSrc = images?.[0] ?? image ?? null;
+  // Only `image` (singular) is used as card background.
+  // `images[]` is for the modal gallery and does NOT appear on the card face.
+  const coverSrc = image ?? null;
+  const hasTech = !!techStack?.length;
 
   const inner = (
     // outer group wrapper — pr/pb reserves 6px space so shadow never overflows
-    <div className="group relative w-full pb-1.5 pr-1.5">
+    <div className="group relative w-full pb-1.5 pr-1.5 [container-type:inline-size]">
       {/* Hard shadow layer: offset 6px from card, contained within wrapper */}
       <div
         className="absolute top-1.5 left-1.5 right-0 bottom-0 border border-foreground bg-foreground transition-colors duration-300 group-hover:bg-background"
@@ -33,8 +31,7 @@ export function WorkCard({
 
       {/* Main card */}
       <div
-        className="relative z-10 aspect-[4/3] w-full overflow-hidden border border-foreground bg-background transition-colors duration-300 group-hover:bg-foreground"
-        style={coverSrc ? undefined : DOT_GRID}
+        className={`relative z-10 aspect-[4/3] w-full overflow-hidden border border-foreground bg-background transition-colors duration-300 group-hover:bg-foreground${coverSrc ? "" : " work-card-dot-grid"}`}
       >
         {/* Photo background */}
         {coverSrc && (
@@ -51,13 +48,29 @@ export function WorkCard({
         )}
 
         {/* Content */}
-        <div className="relative z-10 flex h-full flex-col justify-between p-5">
-          {/* Top-left logo */}
+        <div className={`relative z-10 flex h-full flex-col justify-between ${compact ? "p-3" : "p-5"}`}>
+
+          {/* TechStack hover tags — top-left, fade in on hover */}
+          {hasTech && (
+            <div className={`absolute top-0 left-0 z-10 flex flex-wrap gap-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none ${compact ? "p-3" : "p-5"}`}>
+              {techStack!.map((tag) => (
+                <span
+                  key={tag}
+                  className="border border-background/70 px-1.5 py-0.5 text-[10px] tracking-wider text-background font-medium"
+                  style={{ fontFamily: "var(--font-oppo-sans)" }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Top-left logo — fades out on hover if techStack exists */}
           <div>
             {logo && (
               <span
-                className="text-2xl leading-none text-foreground transition-colors duration-300 group-hover:text-background"
-                style={{ fontFamily: "monospace" }}
+                className={`${compact ? "text-base" : "text-[clamp(14px,8cqw,24px)]"} leading-none text-foreground transition-all duration-300 group-hover:text-background${hasTech ? " group-hover:opacity-0" : ""}`}
+                style={{ fontFamily: "var(--font-oppo-sans)" }}
                 aria-hidden="true"
               >
                 {logo}
@@ -68,8 +81,8 @@ export function WorkCard({
           {/* Center headline */}
           <div className="flex flex-1 items-center">
             <h3
-              className="whitespace-pre-line text-2xl font-bold leading-tight text-foreground transition-colors duration-300 group-hover:text-background"
-              style={{ fontFamily: "monospace" }}
+              className={`whitespace-pre-line ${compact ? "text-base" : "text-[clamp(14px,8cqw,24px)]"} font-bold leading-tight text-foreground transition-colors duration-300 group-hover:text-background`}
+              style={{ fontFamily: "var(--font-oppo-sans)" }}
             >
               {title}
             </h3>
@@ -79,8 +92,8 @@ export function WorkCard({
           {tagline && (
             <div>
               <span
-                className="text-xs tracking-widest text-foreground/70 transition-colors duration-300 group-hover:text-background/60"
-                style={{ fontFamily: "monospace" }}
+                className={`${compact ? "text-[10px] tracking-wider" : "text-[clamp(9px,3.5cqw,12px)] tracking-widest"} font-medium text-foreground/85 transition-colors duration-300 group-hover:text-background/80`}
+                style={{ fontFamily: "var(--font-oppo-sans)" }}
               >
                 {tagline}
               </span>
@@ -90,6 +103,14 @@ export function WorkCard({
       </div>
     </div>
   );
+
+  if (onCardClick) {
+    return (
+      <div onClick={onCardClick} className="block w-full cursor-pointer">
+        {inner}
+      </div>
+    );
+  }
 
   if (href) {
     return (

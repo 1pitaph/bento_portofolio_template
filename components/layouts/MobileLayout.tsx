@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import type { SiteData } from "@/re/types";
 import {
   HeroSection,
@@ -59,7 +60,7 @@ export default function MobileLayout({
         className="grid h-full"
         style={{
           gridTemplateRows:
-            "minmax(0, 2.5fr) minmax(0, 2.5fr) minmax(0, 0.7fr) minmax(0, 0.7fr) minmax(0, 1.5fr)",
+            "minmax(0, 1.8fr) minmax(0, 1.8fr) minmax(0, 2.8fr) minmax(0, 1.2fr)",
         }}
       >
         {/* Hero Section */}
@@ -72,35 +73,43 @@ export default function MobileLayout({
           <SkillsSection data={siteData.skills} />
         </div>
 
-        {/* Work Section */}
+        {/* Work Section — collapsed carousel, same as PC */}
         <div
           ref={workRef}
-          className="flex cursor-pointer items-center justify-between overflow-hidden border-b border-foreground bg-background px-6 transition-colors duration-200 hover:bg-muted"
+          className="overflow-hidden border-b border-foreground px-6 py-4"
         >
-          <SectionHeadingClickable onClick={handleWorkExpand}>
-            Work
-          </SectionHeadingClickable>
-          <div onClick={handleWorkExpand} className="text-xl">
-            +
-          </div>
+          <WorkSection
+            data={siteData.projectCategories}
+            onExpand={handleWorkExpand}
+            isExpanded={false}
+            compact
+          />
         </div>
 
-        {/* About Section */}
-        <div
-          ref={aboutRef}
-          className="flex cursor-pointer items-center justify-between overflow-hidden border-b border-foreground bg-background px-6 transition-colors duration-200 hover:bg-muted"
-        >
-          <SectionHeadingClickable onClick={handleAboutExpand}>
-            About Me
-          </SectionHeadingClickable>
-          <div onClick={handleAboutExpand} className="text-xl">
-            +
+        {/* About Me + Contact Me — side by side */}
+        <div className="flex overflow-hidden">
+          {/* About Me */}
+          <div
+            ref={aboutRef}
+            className="flex w-2/5 cursor-pointer items-end justify-between overflow-hidden border-r border-foreground bg-background px-4 pb-5"
+          >
+            <SectionHeadingClickable onClick={handleAboutExpand}>
+              About Me
+            </SectionHeadingClickable>
+            <div className="flex-shrink-0 w-9 h-9 relative overflow-hidden rounded-full border border-foreground/20 pointer-events-none">
+              <Image
+                src={siteData.about.image}
+                alt={siteData.about.imageAlt}
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
-        </div>
 
-        {/* Contact Section */}
-        <div className="overflow-hidden bg-background px-6 py-6 relative flex flex-col min-h-[150px]">
-          <ContactSection data={siteData.contact} />
+          {/* Contact Section */}
+          <div className="flex-1 overflow-hidden bg-background px-5 py-5 relative flex flex-col">
+            <ContactSection data={siteData.contact} />
+          </div>
         </div>
       </div>
 
@@ -114,6 +123,7 @@ export default function MobileLayout({
           data={siteData.projectCategories}
           onExpand={handleWorkExpand}
           isExpanded={true}
+          compact
         />
       </ExpandedOverlay>
 
