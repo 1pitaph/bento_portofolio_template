@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { AboutData } from "@/re/types";
 import { CloseButton } from "@/components/ui/CloseButton";
 import { SectionHeadingClickable } from "@/components/ui/SectionHeadingClickable";
@@ -31,11 +32,20 @@ export function AboutSection({
   }
 
   return (
-    <div className="h-full">
-      <div className="flex items-center justify-between">
+    <div className="h-full flex flex-col">
+      <div className="self-start">
         <SectionHeadingClickable onClick={onExpand}>
           {`About Me`}
         </SectionHeadingClickable>
+      </div>
+      <div className="flex-1 flex items-center">
+        <Image
+          src={data.image}
+          alt={data.imageAlt}
+          width={80}
+          height={80}
+          className="rounded-full object-cover"
+        />
       </div>
     </div>
   );

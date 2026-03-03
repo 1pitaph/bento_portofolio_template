@@ -63,19 +63,19 @@ export default function MobileLayout({
         }}
       >
         {/* Hero Section */}
-        <div className="overflow-hidden border-b border-black px-6 py-6">
+        <div className="overflow-hidden border-b border-foreground px-6 py-6">
           <HeroSection data={siteData.hero} />
         </div>
 
         {/* Skills Section */}
-        <div className="overflow-hidden border-b border-black px-6 py-6">
+        <div className="overflow-hidden border-b border-foreground px-6 py-6">
           <SkillsSection data={siteData.skills} />
         </div>
 
         {/* Work Section */}
         <div
           ref={workRef}
-          className="flex cursor-pointer items-center justify-between overflow-hidden border-b border-black bg-white px-6 transition-colors duration-200 hover:bg-gray-50"
+          className="flex cursor-pointer items-center justify-between overflow-hidden border-b border-foreground bg-background px-6 transition-colors duration-200 hover:bg-muted"
         >
           <SectionHeadingClickable onClick={handleWorkExpand}>
             Work
@@ -88,7 +88,7 @@ export default function MobileLayout({
         {/* About Section */}
         <div
           ref={aboutRef}
-          className="flex cursor-pointer items-center justify-between overflow-hidden border-b border-black bg-white px-6 transition-colors duration-200 hover:bg-gray-50"
+          className="flex cursor-pointer items-center justify-between overflow-hidden border-b border-foreground bg-background px-6 transition-colors duration-200 hover:bg-muted"
         >
           <SectionHeadingClickable onClick={handleAboutExpand}>
             About Me
@@ -99,7 +99,7 @@ export default function MobileLayout({
         </div>
 
         {/* Contact Section */}
-        <div className="overflow-hidden bg-white px-6 py-6 relative flex flex-col min-h-[150px]">
+        <div className="overflow-hidden bg-background px-6 py-6 relative flex flex-col min-h-[150px]">
           <ContactSection data={siteData.contact} />
         </div>
       </div>

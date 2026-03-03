@@ -25,8 +25,11 @@ export type ContactEntry = {
 
 export type Project = {
   title: string;
-  image: string;
-  techStack: string[];
+  tagline?: string;     // bottom tagline, e.g. "> READY TO EXECUTE _"
+  logo?: string;        // top-left icon/emoji
+  image?: string;       // single cover image
+  images?: string[];    // photography: multiple photos (stacked card effect)
+  techStack?: string[];
   href?: string;
 };
 

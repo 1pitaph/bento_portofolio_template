@@ -15,6 +15,16 @@ const SNAP_MARGIN = 40; // 便利贴至少保留 40px 在可见区域内
 /** Initial z-index base so notes sit above any board decorations. */
 const Z_BASE = 10;
 
+const ShuffleIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="16 3 21 3 21 8" />
+    <line x1="4" y1="20" x2="21" y2="3" />
+    <polyline points="21 16 21 21 16 21" />
+    <line x1="15" y1="15" x2="21" y2="21" />
+    <line x1="4" y1="4" x2="9" y2="9" />
+  </svg>
+);
+
 export default function StickyBoard() {
   const [items, setItems] = useState<LiveNote[]>(() =>
     initialNotes.map((n) => ({ ...n, height: n.height }))
@@ -109,6 +119,38 @@ export default function StickyBoard() {
   // Stable ref so the useEffect closure always calls the latest checkAndSnap
   const checkAndSnapRef = useRef(checkAndSnap);
   checkAndSnapRef.current = checkAndSnap;
+
+  // ── 随机打乱位置 ─────────────────────────────────────────────────────────────
+  const handleShuffle = useCallback(() => {
+    const board = boardRef.current;
+    if (!board) return;
+    const boardW = board.offsetWidth;
+    const boardH = board.offsetHeight;
+    const padding = 10;
+
+    setItems((prev) =>
+      prev.map((item) => {
+        const noteH = item.height ?? 150;
+        const maxX = Math.max(0, boardW - item.width - padding * 2);
+        const maxY = Math.max(0, boardH - noteH - padding * 2);
+        return {
+          ...item,
+          x: padding + Math.random() * maxX,
+          y: padding + Math.random() * maxY,
+        };
+      })
+    );
+
+    const ids = items.map((it) => it.id);
+    setSnappingIds((prev) => new Set([...prev, ...ids]));
+    setTimeout(() => {
+      setSnappingIds((prev) => {
+        const next = new Set(prev);
+        ids.forEach((id) => next.delete(id));
+        return next;
+      });
+    }, 500);
+  }, [items]);
 
   // ── 展开/收起回调 ───────────────────────────────────────────────────────────
   const handleExpandedChange = useCallback(
@@ -254,6 +296,16 @@ export default function StickyBoard() {
           zIndex={zMap[item.id] ?? Z_BASE}
         />
       ))}
+
+      <button
+        onClick={handleShuffle}
+        className="group absolute bottom-4 right-4 z-[100] cursor-pointer overflow-hidden p-1 transition-all duration-300 ease-out hover:scale-110"
+      >
+        <span className="absolute inset-0 origin-left scale-x-0 bg-foreground transition-transform duration-300 ease-out group-hover:scale-x-100" />
+        <span className="relative z-10 flex items-center transition-colors duration-300 group-hover:text-background">
+          <ShuffleIcon />
+        </span>
+      </button>
     </div>
   );
 }

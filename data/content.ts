@@ -3,7 +3,6 @@ import type {
   SkillsData,
   AboutData,
   ContactEntry,
-  ProjectCategory,
 } from "@/re/types";
 
 // Re-export types so existing imports keep working.
@@ -23,8 +22,8 @@ export const skillsData: SkillsData = {
 
 // ─── About ───────────────────────────────────────────────────
 export const aboutData: AboutData = {
-  image: "/pic.png",
-  imageAlt: " Character Illustration",
+  image: "/avatar.png",
+  imageAlt: "Avatar",
   text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore e`,
 };
 
@@ -45,5 +44,5 @@ export const contactData: ContactEntry[] = [
 ];
 
 // ─── Work / Projects ─────────────────────────────────────────
-// category 字段需与筛选器名称对应：AI / 作品集 / 实际项目 / 摄影
-export const projectCategories: ProjectCategory[] = [];
+// Edit work content in data/works/index.ts
+export { projectCategories } from "@/data/works";

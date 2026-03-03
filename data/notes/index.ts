@@ -45,6 +45,21 @@ export const notes: StickyNoteData[] = [
     },
   },
 
+  // ── snippet ───────────────────────────────────────────────────────────
+  {
+    id: 'note-6',
+    x: 360,
+    y: 24,
+    rotation: -1,
+    width: 200,
+    bg: '#EFF6FF',
+    content: {
+      type: 'snippet',
+      label: 'TODO',
+      text: '城市建筑wiki app\n1.按照类型、城市、设计师等多个角度分类，并在地图上显示位置\n2.建筑详情可以由用户共创，为了确保ugc内容的一致性，会有一套标准化的流程与组件',
+    },
+  },
+
   // ── quote ─────────────────────────────────────────────────────────────
   {
     id: 'note-3',
@@ -55,8 +70,8 @@ export const notes: StickyNoteData[] = [
     bg: '#F0FDF4',
     content: {
       type: 'quote',
-      text: '设计不是让它看起来漂亮，而是让它用起来顺手。',
-      caption: '— Dieter Rams',
+      text: 'l\'impossibilité d\'aimer dans notre temps.',
+      caption: '— My Little Airport',
     },
   },
 
@@ -71,6 +86,35 @@ export const notes: StickyNoteData[] = [
     content: {
       type: 'text',
       text: 'If it\'s hard to learn, it\'s a valuable knowledge.',
+    },
+  },
+
+  // ── text ──────────────────────────────────────────────────────────────
+  {
+    id: 'note-7',
+    x: 580,
+    y: 16,
+    rotation: -1,
+    width: 280,
+    bg: '#FFFBE0',
+    content: {
+      type: 'text',
+      text: '表达欲越强烈，主体性越磅礴\n\n未经叙述的经历是混沌和混乱的。是叙事对它们进行了筛选、排序和诠释，将"发生了什么"变成"这对我意味着什么"，我们因此获得了内在的连续性和完整感。\n\n这就是为什么深度交谈常常给我们带来高潮般的快感，因为我们在他者确认的目光中看到自我最辽阔的边界。那个惯常的、狭小的我，在对话中被更复杂、更丰富、更互联的我们所取代，我们体验到从自身局限中解放出来的、无与伦比的自由与狂喜。\n\n表达越频繁，主体性的边界越清晰。在词语落下的瞬间，我们第一次真正看到自己想法的模样。\n\n那些用词精准又高级的人，也是主体性无坚不摧的人。\n\n所以我们要大量的、频繁的表达自己，日记也好、deeptalk也好、写作也好甚至发呆也好，只要这样才能感受到我之所以为我的连续感...',
+    },
+  },
+
+  // ── snippet ───────────────────────────────────────────────────────────
+  {
+    id: 'note-8',
+    x: 580,
+    y: 200,
+    rotation: 2,
+    width: 220,
+    bg: '#EFF6FF',
+    content: {
+      type: 'snippet',
+      label: 'TODO',
+      text: 'langligo\n浏览器插件，采用渐进式学习的方式，插件会先将英文网页翻译成中文，然后根据用户情况将部分中文替换为英文，在使用过程中，通过算法以及单词难度等维度渐进式的增加英文的比重。',
     },
   },
 

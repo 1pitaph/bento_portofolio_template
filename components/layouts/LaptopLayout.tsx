@@ -140,9 +140,9 @@ export default function ResizableLayout({
         >
           <div
             ref={topVLineRef}
-            className={`absolute h-full w-px origin-top bg-black ${isDragging === "vertical-top"
-                ? "w-1 bg-gray-400"
-                : "group-hover:w-1 group-hover:bg-gray-400"
+            className={`absolute h-full w-px origin-top bg-foreground ${isDragging === "vertical-top"
+                ? "w-1 bg-muted-foreground"
+                : "group-hover:w-1 group-hover:bg-muted-foreground"
               }`}
           />
         </div>
@@ -166,9 +166,9 @@ export default function ResizableLayout({
       >
         <div
           ref={mainHLineRef}
-          className={`absolute h-px w-full origin-left bg-black ${isDragging === "horizontal-main"
-              ? "h-1 bg-gray-400"
-              : "group-hover:h-1 group-hover:bg-gray-400"
+          className={`absolute h-px w-full origin-left bg-foreground ${isDragging === "horizontal-main"
+              ? "h-1 bg-muted-foreground"
+              : "group-hover:h-1 group-hover:bg-muted-foreground"
             }`}
         />
       </div>
@@ -199,9 +199,9 @@ export default function ResizableLayout({
         >
           <div
             ref={bottomVLineRef}
-            className={`absolute h-full w-px origin-top bg-black ${isDragging === "vertical-bottom"
-                ? "w-1 bg-gray-400"
-                : "group-hover:w-1 group-hover:bg-gray-400"
+            className={`absolute h-full w-px origin-top bg-foreground ${isDragging === "vertical-bottom"
+                ? "w-1 bg-muted-foreground"
+                : "group-hover:w-1 group-hover:bg-muted-foreground"
               }`}
           />
         </div>
@@ -229,9 +229,9 @@ export default function ResizableLayout({
           >
             <div
               ref={bottomRightHLineRef}
-              className={`absolute h-px w-full origin-left bg-black ${isDragging === "horizontal-bottom-right"
-                  ? "h-1 bg-gray-400"
-                  : "group-hover:h-1 group-hover:bg-gray-400"
+              className={`absolute h-px w-full origin-left bg-foreground ${isDragging === "horizontal-bottom-right"
+                  ? "h-1 bg-muted-foreground"
+                  : "group-hover:h-1 group-hover:bg-muted-foreground"
                 }`}
             />
           </div>
@@ -262,9 +262,9 @@ export default function ResizableLayout({
             >
               <div
                 ref={bottomRightContactVLineRef}
-                className={`absolute h-full w-px origin-top z-[-1] bg-black ${isDragging === "vertical-bottom-right-contact"
-                    ? "w-1 bg-gray-400"
-                    : "group-hover:w-1 group-hover:bg-gray-400"
+                className={`absolute h-full w-px origin-top z-[-1] bg-foreground ${isDragging === "vertical-bottom-right-contact"
+                    ? "w-1 bg-muted-foreground"
+                    : "group-hover:w-1 group-hover:bg-muted-foreground"
                   }`}
               />
             </div>

@@ -42,24 +42,24 @@ type ContactSectionProps = {
 };
 
 export function ContactSection({ data }: ContactSectionProps) {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
 
-  const isDark = theme === "dark";
+  const isDark = resolvedTheme === "dark";
 
   return (
     <div className="relative h-full flex flex-col justify-between">
       {/* Upper Content - Main Links */}
-      <div>
-        <h3 className="heading-section-sm">Contact Me</h3>
+      <div className="py-1">
+        <h3 className="heading-section-sm inline-block leading-tight"><span className="relative z-10">Contact Me</span></h3>
         <div className="mt-4 space-y-2">
           {data.map((entry) => (
             <a
               key={entry.value}
               href={entry.href}
-              className="flex items-center gap-2 text-gray-600 hover:text-black"
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
             >
               {entry.icon === "mail-tick" && <MailTickIcon />}
               {entry.icon === "smartphone" && <SmartphoneIcon />}
@@ -75,8 +75,8 @@ export function ContactSection({ data }: ContactSectionProps) {
           onClick={() => setTheme(isDark ? "light" : "dark")}
           className="group absolute bottom-0 right-0 cursor-pointer overflow-hidden p-1 transition-all duration-300 ease-out hover:scale-110"
         >
-          <span className="absolute inset-0 origin-left scale-x-0 bg-black transition-transform duration-300 ease-out group-hover:scale-x-100" />
-          <span className="relative z-10 flex items-center transition-colors duration-300 group-hover:text-white">
+          <span className="absolute inset-0 origin-left scale-x-0 bg-foreground transition-transform duration-300 ease-out group-hover:scale-x-100" />
+          <span className="relative z-10 flex items-center transition-colors duration-300 group-hover:text-background">
             {isDark ? <SunIcon /> : <MoonIcon />}
           </span>
         </button>
