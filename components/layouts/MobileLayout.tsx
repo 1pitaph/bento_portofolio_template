@@ -29,7 +29,6 @@ export default function MobileLayout({
 
   const workRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleWorkExpand = () => {
     if (expandedSection === "work") {
@@ -54,29 +53,25 @@ export default function MobileLayout({
   const clipFrom = getClipFrom(sourceRect);
 
   return (
-    <div ref={containerRef} className="relative h-dvh overflow-hidden">
-      {/* Mobile column layout */}
-      <div
-        className="grid h-full"
-        style={{
-          gridTemplateRows:
-            "minmax(0, 1.8fr) minmax(0, 1.8fr) minmax(0, 2.8fr) minmax(0, 1.2fr)",
-        }}
-      >
-        {/* Hero Section */}
-        <div className="overflow-hidden border-b border-foreground px-6 py-6">
+    <div className="relative min-h-dvh bg-background">
+      {/* Scrollable page */}
+      <div className="overflow-y-auto">
+
+        {/* Hero */}
+        <div className="border-b border-foreground px-6 py-6">
           <HeroSection data={siteData.hero} />
         </div>
 
-        {/* Skills Section */}
-        <div className="overflow-hidden border-b border-foreground px-6 py-6">
+        {/* Skills */}
+        <div className="border-b border-foreground px-6 py-6">
           <SkillsSection data={siteData.skills} />
         </div>
 
-        {/* Work Section — collapsed carousel, same as PC */}
+        {/* Work — carousel, fixed height so WorkSection's h-full works */}
         <div
           ref={workRef}
-          className="overflow-hidden border-b border-foreground px-6 py-4"
+          className="border-b border-foreground px-6 py-4"
+          style={{ height: "46vh" }}
         >
           <WorkSection
             data={siteData.projectCategories}
@@ -86,17 +81,16 @@ export default function MobileLayout({
           />
         </div>
 
-        {/* About Me + Contact Me — side by side */}
-        <div className="flex overflow-hidden">
-          {/* About Me */}
+        {/* About Me + Contact — side by side */}
+        <div className="flex">
           <div
             ref={aboutRef}
-            className="flex w-2/5 cursor-pointer items-end justify-between overflow-hidden border-r border-foreground bg-background px-4 pb-5"
+            className="flex w-2/5 cursor-pointer items-end justify-between overflow-hidden border-r border-foreground bg-background px-4 pb-5 pt-5"
           >
             <SectionHeadingClickable onClick={handleAboutExpand}>
               About Me
             </SectionHeadingClickable>
-            <div className="flex-shrink-0 w-9 h-9 relative overflow-hidden rounded-full border border-foreground/20 pointer-events-none">
+            <div className="relative h-9 w-9 flex-shrink-0 overflow-hidden rounded-full border border-foreground/20 pointer-events-none">
               <Image
                 src={siteData.about.image}
                 alt={siteData.about.imageAlt}
@@ -106,8 +100,7 @@ export default function MobileLayout({
             </div>
           </div>
 
-          {/* Contact Section */}
-          <div className="flex-1 overflow-hidden bg-background px-5 py-5 relative flex flex-col">
+          <div className="flex flex-1 flex-col overflow-hidden bg-background px-5 py-5 relative">
             <ContactSection data={siteData.contact} />
           </div>
         </div>

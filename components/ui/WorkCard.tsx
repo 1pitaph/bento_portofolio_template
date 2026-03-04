@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import type { Project } from "@/re/types";
+import { WorkIcon } from "@/re/icons";
 
 type WorkCardProps = Project & { compact?: boolean; onCardClick?: () => void };
 
@@ -31,7 +32,7 @@ export function WorkCard({
 
       {/* Main card */}
       <div
-        className={`relative z-10 aspect-[4/3] w-full overflow-hidden border border-foreground bg-background transition-colors duration-300 group-hover:bg-foreground${coverSrc ? "" : " work-card-dot-grid"}`}
+        className={`relative z-10 aspect-[4/3] w-full overflow-hidden border border-foreground bg-background transition-colors duration-300 work-card-main${coverSrc ? "" : " work-card-dot-grid"}`}
       >
         {/* Photo background */}
         {coverSrc && (
@@ -56,7 +57,7 @@ export function WorkCard({
               {techStack!.map((tag) => (
                 <span
                   key={tag}
-                  className="border border-background/70 px-1.5 py-0.5 text-[10px] tracking-wider text-background font-medium"
+                  className="work-card-tag border px-1.5 py-0.5 text-[10px] tracking-wider font-medium"
                   style={{ fontFamily: "var(--font-oppo-sans)" }}
                 >
                   {tag}
@@ -69,11 +70,10 @@ export function WorkCard({
           <div>
             {logo && (
               <span
-                className={`${compact ? "text-base" : "text-[clamp(14px,8cqw,24px)]"} leading-none text-foreground transition-all duration-300 group-hover:text-background${hasTech ? " group-hover:opacity-0" : ""}`}
-                style={{ fontFamily: "var(--font-oppo-sans)" }}
+                className={`inline-flex leading-none text-foreground transition-all duration-300 work-card-hover-text${hasTech ? " group-hover:opacity-0" : ""}`}
                 aria-hidden="true"
               >
-                {logo}
+                <WorkIcon name={logo} size={compact ? 16 : 20} />
               </span>
             )}
           </div>
@@ -81,7 +81,7 @@ export function WorkCard({
           {/* Center headline */}
           <div className="flex flex-1 items-center">
             <h3
-              className={`whitespace-pre-line ${compact ? "text-base" : "text-[clamp(14px,8cqw,24px)]"} font-bold leading-tight text-foreground transition-colors duration-300 group-hover:text-background`}
+              className={`whitespace-pre-line ${compact ? "text-base" : "text-[clamp(14px,8cqw,24px)]"} font-bold leading-tight text-foreground transition-colors duration-300 work-card-hover-text`}
               style={{ fontFamily: "var(--font-oppo-sans)" }}
             >
               {title}
@@ -90,9 +90,9 @@ export function WorkCard({
 
           {/* Bottom tagline */}
           {tagline && (
-            <div>
+            <div className="overflow-hidden">
               <span
-                className={`${compact ? "text-[10px] tracking-wider" : "text-[clamp(9px,3.5cqw,12px)] tracking-widest"} font-medium text-foreground/85 transition-colors duration-300 group-hover:text-background/80`}
+                className={`${compact ? "text-[10px] tracking-wider truncate block" : "text-[clamp(9px,3.5cqw,12px)] tracking-widest"} font-medium text-foreground/85 transition-colors duration-300 work-card-hover-text-muted`}
                 style={{ fontFamily: "var(--font-oppo-sans)" }}
               >
                 {tagline}

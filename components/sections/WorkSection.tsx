@@ -313,41 +313,61 @@ export function WorkSection({
   /* ─────────────────────────────────────────────────────── */
   /* Expanded view                                           */
   /* ─────────────────────────────────────────────────────── */
+
+  const expandedContent = (
+    <>
+      <div className="flex items-center justify-between">
+        <SectionHeadingClickable onClick={onExpand}>
+          Work
+        </SectionHeadingClickable>
+      </div>
+
+      <FilterBar activeFilter={activeFilter} onFilter={handleFilter} />
+
+      {filteredData.map((group) => (
+        <div key={group.category} className="mb-4">
+          <p className="mt-4 mb-2 text-xs tracking-widest text-foreground/40 uppercase">
+            {group.category}
+          </p>
+          <div className={`grid gap-4 ${compact ? "[grid-template-columns:repeat(auto-fill,minmax(140px,1fr))]" : "[grid-template-columns:repeat(auto-fill,minmax(260px,1fr))]"}`}>
+            {group.projects.map((project) => (
+              <WorkCard
+                key={project.title}
+                {...project}
+                compact={compact}
+                onCardClick={() => setSelectedProject(project)}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </>
+  );
+
+  /* Mobile: let ExpandedOverlay's overflow-auto handle scrolling */
+  if (compact) {
+    return (
+      <>
+      <div className="relative">
+        <CloseButton onClick={onExpand} />
+        {expandedContent}
+      </div>
+      {modal}
+      </>
+    );
+  }
+
+  /* Desktop: wheel-driven spring scroll */
   return (
     <>
     <div ref={expandedContainerRef} className="relative h-full overflow-hidden">
-      {/* Close button stays fixed — outside the scrollable motion.div */}
       <CloseButton onClick={onExpand} />
-
       <motion.div
         ref={expandedContentRef}
         animate={{ y: -expandedAnimY }}
         transition={{ type: "spring", stiffness: 300, damping: 35 }}
       >
-        <div className="flex items-center justify-between">
-          <SectionHeadingClickable onClick={onExpand}>
-            Work
-          </SectionHeadingClickable>
-        </div>
-
-        <FilterBar activeFilter={activeFilter} onFilter={handleFilter} />
-
-        {filteredData.map((group) => (
-          <div key={group.category} className="mb-4">
-            <p className="mt-4 mb-2 text-xs tracking-widest text-foreground/40 uppercase">
-              {group.category}
-            </p>
-            <div className="grid gap-6 [grid-template-columns:repeat(auto-fill,minmax(260px,1fr))]">
-              {group.projects.map((project) => (
-                <WorkCard
-                  key={project.title}
-                  {...project}
-                  onCardClick={() => setSelectedProject(project)}
-                />
-              ))}
-            </div>
-          </div>
-        ))}
+        {expandedContent}
       </motion.div>
     </div>
     {modal}

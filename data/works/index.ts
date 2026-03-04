@@ -7,7 +7,7 @@
  * Project fields:
  *  title     — headline text (use \n for line breaks)
  *  tagline   — bottom label, e.g. "> READY TO EXECUTE _"
- *  logo      — top-left icon or emoji
+ *  logo      — top-left Lucide icon name (see re/icons.tsx for available names)
  *  image     — single cover image path (relative to /public)
  *  images    — photography: first image is used as card cover (relative to /public)
  *              recommended path: /works/photography/<project-folder>/<filename>
@@ -24,27 +24,34 @@ export const projectCategories: ProjectCategory[] = [
       {
         title: "Mochi",
         tagline: "> AI结构化输出 _",
-        logo: "⊕",
+        logo: "BrainCircuit",
         techStack: ["Figma", "Html"],
         pages: 3,
       },
       {
         title: "SketchUp\n插件",
         tagline: "> 原型图绘制，Vibe Coding _",
-        logo: "⊞",
+        logo: "PenTool",
         techStack: ["Ruby", "Python", "Node.js"],
       },
       {
         title: "NanoBanana\n生图指南",
         tagline: "> PDF _",
-        logo: "⊙",
+        logo: "BookOpen",
         techStack: ["Figma", "Tropy"],
       },
       {
         title: "openclaw\n可视化",
         tagline: "> 像素风看板 _",
-        logo: "⊘",
+        logo: "BarChart3",
         techStack: ["Github", "Python"],
+      },
+      {
+        title: "Lora训练",
+        tagline: "> 风格化 _",
+        logo: "Wand2",
+        techStack: ["Pytorch"],
+        pages: 2,
       },
     ],
   },
@@ -54,13 +61,55 @@ export const projectCategories: ProjectCategory[] = [
       {
         title: "Designer Soul.\nDeveloper Brain.",
         tagline: "> READY TO EXECUTE _",
-        logo: "⠿",
+        logo: "Code2",
       },
       {
         title: "Bento\nPortfolio.",
         tagline: "> THIS VERY SITE _",
-        logo: "⊞",
+        logo: "LayoutGrid",
         href: "https://github.com/1pitaph/bento_portofolio_template",
+      },
+      {
+        title: "Coastal Erosion",
+        tagline: "> Portfolio _",
+        logo: "Waves",
+        images: [
+          "/works/coastal-erosion/1.png",
+          "/works/coastal-erosion/2.png",
+          "/works/coastal-erosion/3.png",
+          "/works/coastal-erosion/4.png",
+          "/works/coastal-erosion/5.png",
+          "/works/coastal-erosion/6.png",
+        ],
+        pages: 7,
+      },
+      {
+        title: "Avian Oasis",
+        tagline: "> Portfolio _",
+        logo: "Bird",
+        images: [
+          "/works/avian-oasis/1.png",
+          "/works/avian-oasis/2.png",
+          "/works/avian-oasis/3.png",
+          "/works/avian-oasis/4.png",
+          "/works/avian-oasis/5.png",
+          "/works/avian-oasis/6.png",
+        ],
+        pages: 7,
+      },
+      {
+        title: "Mountain &\nRiver Harmony",
+        tagline: "> Portfolio _",
+        logo: "Mountain",
+        images: [
+          "/works/mountain-river-harmony/1.png",
+          "/works/mountain-river-harmony/2.png",
+          "/works/mountain-river-harmony/3.png",
+          "/works/mountain-river-harmony/4.png",
+          "/works/mountain-river-harmony/5.png",
+          "/works/mountain-river-harmony/6.png",
+        ],
+        pages: 7,
       },
     ],
   },
@@ -70,7 +119,7 @@ export const projectCategories: ProjectCategory[] = [
       {
         title: "Full-Stack\nDashboard.",
         tagline: "> PRODUCTION READY _",
-        logo: "⊗",
+        logo: "LayoutDashboard",
         techStack: ["Next.js", "TypeScript"],
       },
     ],
@@ -81,6 +130,7 @@ export const projectCategories: ProjectCategory[] = [
       {
         title: "宸知筑",
         tagline: "> 北京 _",
+        logo: "Building2",
         // 页面布局：第1页 = 标题信息，第2-6页 = images[0]-images[4]
         images: [
           "/works/photography/chenzhizhu/1.jpg",
@@ -94,6 +144,7 @@ export const projectCategories: ProjectCategory[] = [
       {
         title: "观山悦湖",
         tagline: "> 泰安 _",
+        logo: "Mountain",
         // 页面布局：第1页 = 标题信息，第2-5页 = images[0]-images[3]
         images: [
           "/works/photography/guanshanyuehu/1.jpg",
@@ -106,6 +157,7 @@ export const projectCategories: ProjectCategory[] = [
       {
         title: "保利·璞岸",
         tagline: "> 郑州 _",
+        logo: "Building",
         // 页面布局：第1页 = 标题信息，第2-6页 = images[0]-images[4]
         images: [
           "/works/photography/polipuan/1.jpg",
@@ -119,6 +171,7 @@ export const projectCategories: ProjectCategory[] = [
       {
         title: "保利·东港天汇",
         tagline: "> 大连 _",
+        logo: "Anchor",
         // 页面布局：第1页 = 标题信息，第2-6页 = images[0]-images[4]
         images: [
           "/works/photography/polidonggangtianhui/1.jpg",

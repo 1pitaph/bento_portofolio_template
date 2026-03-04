@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import type { Project } from "@/re/types";
+import { WorkIcon } from "@/re/icons";
 
 type WorkCardModalProps = {
   project: Project | null;
@@ -66,11 +67,8 @@ export function WorkCardModal({
               <div className="flex flex-1 flex-col justify-between p-8">
                 <div>
                   {project.logo && (
-                    <span
-                      className="text-3xl leading-none text-foreground"
-                      style={{ fontFamily: "var(--font-oppo-sans)" }}
-                    >
-                      {project.logo}
+                    <span className="inline-flex leading-none text-foreground">
+                      <WorkIcon name={project.logo} size={28} />
                     </span>
                   )}
                 </div>
@@ -162,21 +160,18 @@ export function WorkCardModal({
                 </div>
               )}
 
-              <div className={`relative z-10 flex h-full flex-col justify-between p-12${!isPage1 ? " pointer-events-none" : ""}`}>
+              <div className={`relative z-10 flex h-full flex-col justify-between work-modal-page-content${!isPage1 ? " pointer-events-none" : ""}`}>
                 {/* Top: logo (page 1 only) */}
                 <div>
                   {isPage1 && project.logo && (
-                    <span
-                      className={`text-4xl leading-none ${hasImg ? "text-white" : "text-foreground"}`}
-                      style={{ fontFamily: "var(--font-oppo-sans)" }}
-                    >
-                      {project.logo}
+                    <span className={`inline-flex leading-none ${hasImg ? "text-white" : "text-foreground"}`}>
+                      <WorkIcon name={project.logo} size={36} />
                     </span>
                   )}
                 </div>
 
-                {/* Middle: title (page 1 only) */}
-                <div>
+                {/* Middle: title (page 1 only) — flex-1 so it fills space and centers vertically */}
+                <div className="flex flex-1 items-center">
                   {isPage1 && (
                     <h2
                       className={`text-5xl font-bold leading-tight ${hasImg ? "text-white" : "text-foreground"}`}
@@ -249,7 +244,7 @@ export function WorkCardModal({
 
               {/* ── TechStack (bottom-right, page 1 only, right-aligned with close button) ── */}
               {isPage1 && project.techStack && project.techStack.length > 0 && (
-                <div className="absolute bottom-12 right-5 z-20 flex flex-col items-end gap-1.5">
+                <div className="absolute bottom-5 right-5 z-20 flex flex-col items-end gap-1.5">
                   {project.techStack.map((tag) => (
                     <span
                       key={tag}
