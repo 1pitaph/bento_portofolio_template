@@ -1,6 +1,8 @@
 import {
   BrainCircuit,
+  Workflow,
   PenTool,
+  Server,
   BookOpen,
   BarChart3,
   Wand2,
@@ -10,6 +12,7 @@ import {
   Bird,
   Mountain,
   LayoutDashboard,
+  TreePine,
   Camera,
   Building2,
   Building,
@@ -20,7 +23,9 @@ import type { ComponentType } from "react";
 
 const iconMap: Record<string, ComponentType<LucideProps>> = {
   BrainCircuit,
+  Workflow,
   PenTool,
+  Server,
   BookOpen,
   BarChart3,
   Wand2,
@@ -30,6 +35,7 @@ const iconMap: Record<string, ComponentType<LucideProps>> = {
   Bird,
   Mountain,
   LayoutDashboard,
+  TreePine,
   Camera,
   Building2,
   Building,

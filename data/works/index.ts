@@ -22,11 +22,27 @@ export const projectCategories: ProjectCategory[] = [
     category: "AI",
     projects: [
       {
+        title: "基于节点的\n生图框架",
+        tagline: "> Todo _",
+        logo: "Workflow",
+        techStack: ["Node.js"],
+        imageGroups: [
+          ["/works/node-image-framework/1.png"], // pageIdx 0 = page 2
+          ["/works/node-image-framework/2.mp4"], // pageIdx 1 = page 3
+        ],
+        pages: 3,
+      },
+      {
         title: "Mochi",
         tagline: "> AI结构化输出 _",
         logo: "BrainCircuit",
         techStack: ["Figma", "Html"],
-        pages: 3,
+        imageGroups: [
+          ["/works/mochi/1-1.png", "/works/mochi/1-2.png"],
+          ["/works/mochi/2.png"],
+          ["/works/mochi/3.mp4"],
+        ],
+        pages: 4,
       },
       {
         title: "SketchUp\n插件",
@@ -35,13 +51,28 @@ export const projectCategories: ProjectCategory[] = [
         techStack: ["Ruby", "Python", "Node.js"],
       },
       {
+        title: "Sketch MCP",
+        tagline: "> MCP服务器，自然语言建模 _",
+        logo: "Server",
+        techStack: ["Python", "Json"],
+        href: "https://github.com/1pitaph/su_mcp",
+        imageGroups: [
+          [], // pageIdx 0 = page 2 (text, handled by pageTexts)
+          ["/works/sketch-mcp/1-1.png", "/works/sketch-mcp/1-2.png"], // pageIdx 1 = page 3
+          ["/works/sketch-mcp/2.png"], // pageIdx 2 = page 4
+          ["/works/sketch-mcp/3.mp4"], // pageIdx 3 = page 5
+          ["/works/sketch-mcp/4.mp4"], // pageIdx 4 = page 6
+        ],
+        pages: 6,
+      },
+      {
         title: "NanoBanana\n生图指南",
         tagline: "> PDF _",
         logo: "BookOpen",
         techStack: ["Figma", "Tropy"],
       },
       {
-        title: "openclaw\n可视化",
+        title: "Openclaw\n可视化",
         tagline: "> 像素风看板 _",
         logo: "BarChart3",
         techStack: ["Github", "Python"],
@@ -117,10 +148,95 @@ export const projectCategories: ProjectCategory[] = [
     category: "实际项目",
     projects: [
       {
-        title: "Full-Stack\nDashboard.",
-        tagline: "> PRODUCTION READY _",
-        logo: "LayoutDashboard",
-        techStack: ["Next.js", "TypeScript"],
+        title: "保利·天奕",
+        tagline: "> 大连 _",
+        logo: "Building",
+        imageGroups: [
+          ["/works/boli-tianyi/1.jpg"],
+          ["/works/boli-tianyi/2.jpg"],
+          ["/works/boli-tianyi/3.jpg"],
+          ["/works/boli-tianyi/4.jpg"],
+          ["/works/boli-tianyi/5.jpg"],
+        ],
+        pages: 6,
+      },
+      {
+        title: "杜仲公园策划",
+        tagline: "> 北京 _",
+        logo: "TreePine",
+        imageGroups: [
+          ["/works/duzhong-park/1.jpg"],
+          ["/works/duzhong-park/2.jpg"],
+          ["/works/duzhong-park/3.jpg"],
+          ["/works/duzhong-park/4.jpg"],
+          ["/works/duzhong-park/5.jpg"],
+        ],
+        pages: 6,
+      },
+      {
+        title: "昆仑府西区",
+        tagline: "> 临汾 _",
+        logo: "Building2",
+        imageGroups: [
+          ["/works/kunlunfu-west/1.jpg"],
+          ["/works/kunlunfu-west/2.jpg"],
+          ["/works/kunlunfu-west/3.jpg"],
+          ["/works/kunlunfu-west/4.jpg"],
+          ["/works/kunlunfu-west/5.jpg"],
+        ],
+        pages: 6,
+      },
+      {
+        title: "联东U谷",
+        tagline: "> 北京 _",
+        logo: "LayoutGrid",
+        imageGroups: [
+          ["/works/liandong-upark/1.jpg"],
+          ["/works/liandong-upark/2.jpg"],
+          ["/works/liandong-upark/3.jpg"],
+          ["/works/liandong-upark/4.jpg"],
+          ["/works/liandong-upark/5.jpg"],
+        ],
+        pages: 6,
+      },
+      {
+        title: "联想住区\n想云湾",
+        tagline: "> 天津 _",
+        logo: "Waves",
+        imageGroups: [
+          ["/works/lenovo-xiangyunwan/1.jpg"],
+          ["/works/lenovo-xiangyunwan/2.jpg"],
+          ["/works/lenovo-xiangyunwan/3.jpg"],
+          ["/works/lenovo-xiangyunwan/4.jpg"],
+          ["/works/lenovo-xiangyunwan/5.jpg"],
+        ],
+        pages: 6,
+      },
+      {
+        title: "润城桃熹",
+        tagline: "> 徐州 _",
+        logo: "Bird",
+        imageGroups: [
+          ["/works/runcheng-taoxi/1.jpg"],
+          ["/works/runcheng-taoxi/2.jpg"],
+          ["/works/runcheng-taoxi/3.jpg"],
+          ["/works/runcheng-taoxi/4.jpg"],
+          ["/works/runcheng-taoxi/5.jpg"],
+        ],
+        pages: 6,
+      },
+      {
+        title: "双桥公园",
+        tagline: "> 北京 _",
+        logo: "TreePine",
+        imageGroups: [
+          ["/works/shuangqiao-park/1.jpg"],
+          ["/works/shuangqiao-park/2.jpg"],
+          ["/works/shuangqiao-park/3.jpg"],
+          ["/works/shuangqiao-park/4.jpg"],
+          ["/works/shuangqiao-park/5.jpg"],
+        ],
+        pages: 6,
       },
     ],
   },

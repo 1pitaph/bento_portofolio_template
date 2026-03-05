@@ -29,6 +29,7 @@ export type Project = {
   logo?: string;        // top-left icon/emoji
   image?: string;       // single cover image
   images?: string[];    // photography: multiple photos (stacked card effect)
+  imageGroups?: string[][];  // pages 2+: each sub-array = one page (supports multiple images per page)
   techStack?: string[];
   href?: string;
   pages?: number;       // number of detail pages in the modal (desktop); omit or 1 = no pagination

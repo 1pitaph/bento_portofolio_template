@@ -324,23 +324,16 @@ export function WorkSection({
 
       <FilterBar activeFilter={activeFilter} onFilter={handleFilter} />
 
-      {filteredData.map((group) => (
-        <div key={group.category} className="mb-4">
-          <p className="mt-4 mb-2 text-xs tracking-widest text-foreground/40 uppercase">
-            {group.category}
-          </p>
-          <div className={`grid gap-4 ${compact ? "[grid-template-columns:repeat(auto-fill,minmax(140px,1fr))]" : "[grid-template-columns:repeat(auto-fill,minmax(260px,1fr))]"}`}>
-            {group.projects.map((project) => (
-              <WorkCard
-                key={project.title}
-                {...project}
-                compact={compact}
-                onCardClick={() => setSelectedProject(project)}
-              />
-            ))}
-          </div>
-        </div>
-      ))}
+      <div className={`mt-4 grid gap-4 ${compact ? "[grid-template-columns:repeat(auto-fill,minmax(140px,1fr))]" : "[grid-template-columns:repeat(auto-fill,minmax(260px,1fr))]"}`}>
+        {filteredData.flatMap((group) => group.projects).map((project) => (
+          <WorkCard
+            key={project.title}
+            {...project}
+            compact={compact}
+            onCardClick={() => setSelectedProject(project)}
+          />
+        ))}
+      </div>
     </>
   );
 
