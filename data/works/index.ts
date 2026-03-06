@@ -33,6 +33,33 @@ export const projectCategories: ProjectCategory[] = [
         pages: 3,
       },
       {
+        title: "NanoBanana\n生图指南",
+        tagline: "> PDF _",
+        logo: "BookOpen",
+        techStack: ["Figma", "Tropy"],
+        imageGroups: [
+          ["/works/nanobanana-guide/1.png"], // page 2
+          ["/works/nanobanana-guide/2.png"], // page 3
+          ["/works/nanobanana-guide/3-1.png", "/works/nanobanana-guide/3-2.png"], // page 4
+          ["/works/nanobanana-guide/4-1.png", "/works/nanobanana-guide/4-2.png"], // page 5
+          ["/works/nanobanana-guide/5-1.png", "/works/nanobanana-guide/5-2.png"], // page 6
+          ["/works/nanobanana-guide/6-1.png", "/works/nanobanana-guide/6-2.png"], // page 7
+        ],
+        pages: 7,
+      },
+      {
+        title: "奥创Bridge",
+        tagline: "> 连接奥创引擎与SU _",
+        logo: "Link",
+        techStack: ["Ruby", "Node.js"],
+        imageGroups: [
+          ["/works/aichuang-bridge/1.png"], // page 2
+          ["/works/aichuang-bridge/2-1.png", "/works/aichuang-bridge/2-2.png"], // page 3
+          ["/works/aichuang-bridge/3.mp4"], // page 4
+        ],
+        pages: 4,
+      },
+      {
         title: "Mochi",
         tagline: "> AI结构化输出 _",
         logo: "BrainCircuit",
@@ -49,6 +76,19 @@ export const projectCategories: ProjectCategory[] = [
         tagline: "> 原型图绘制，Vibe Coding _",
         logo: "PenTool",
         techStack: ["Ruby", "Python", "Node.js"],
+        imageGroups: [
+          ["/works/sketchup-plugin/1.png"], // page 2
+          ["/works/sketchup-plugin/2.png"], // page 3
+          ["/works/sketchup-plugin/3.png"], // page 4
+          ["/works/sketchup-plugin/4.png"], // page 5
+          ["/works/sketchup-plugin/5.png"], // page 6
+          ["/works/sketchup-plugin/6.png"], // page 7
+          ["/works/sketchup-plugin/7.png"], // page 8
+          ["/works/sketchup-plugin/8.png"], // page 9
+          ["/works/sketchup-plugin/9.png"], // page 10
+          ["/works/sketchup-plugin/10.mp4"], // page 11 (long video)
+        ],
+        pages: 11,
       },
       {
         title: "Sketch MCP",
@@ -66,22 +106,55 @@ export const projectCategories: ProjectCategory[] = [
         pages: 6,
       },
       {
-        title: "NanoBanana\n生图指南",
-        tagline: "> PDF _",
-        logo: "BookOpen",
-        techStack: ["Figma", "Tropy"],
+        title: "前端设计",
+        tagline: "> ai生成前端页面尝试 _",
+        logo: "Palette",
+        techStack: ["Figma", "Html"],
+        imageGroups: [
+          ["/works/frontend-design/1.mp4"], // page 2
+          ["/works/frontend-design/2.mp4"], // page 3
+          ["/works/frontend-design/3.mp4"], // page 4
+          ["/works/frontend-design/4.mp4"], // page 5
+          ["/works/frontend-design/5.mp4"], // page 6
+          ["/works/frontend-design/6.mp4"], // page 7
+          ["/works/frontend-design/7.mp4"], // page 8
+          ["/works/frontend-design/8.png"], // page 9
+          ["/works/frontend-design/9.png"], // page 10
+          ["/works/frontend-design/10.png"], // page 11
+          ["/works/frontend-design/11.png"], // page 12
+          ["/works/frontend-design/12.png"], // page 13
+          ["/works/frontend-design/13.png"], // page 14
+        ],
+        pages: 14,
+      },
+      {
+        title: "iOS App 框架",
+        tagline: "> ios app开发尝试 _",
+        logo: "Smartphone",
+        techStack: ["Swift"],
+        imageGroups: [
+          ["/works/ios-app-framework/1-1.jpg", "/works/ios-app-framework/1-2.jpg"], // page 2
+        ],
+        pages: 2,
       },
       {
         title: "Openclaw\n可视化",
         tagline: "> 像素风看板 _",
         logo: "BarChart3",
         techStack: ["Github", "Python"],
+        imageGroups: [
+          ["/works/openclaw/1.jpg"], // page 2
+        ],
+        pages: 2,
       },
       {
         title: "Lora训练",
         tagline: "> 风格化 _",
         logo: "Wand2",
         techStack: ["Pytorch"],
+        imageGroups: [
+          ["/works/lora-training/1.jpg"], // page 2
+        ],
         pages: 2,
       },
     ],
@@ -89,17 +162,6 @@ export const projectCategories: ProjectCategory[] = [
   {
     category: "作品集",
     projects: [
-      {
-        title: "Designer Soul.\nDeveloper Brain.",
-        tagline: "> READY TO EXECUTE _",
-        logo: "Code2",
-      },
-      {
-        title: "Bento\nPortfolio.",
-        tagline: "> THIS VERY SITE _",
-        logo: "LayoutGrid",
-        href: "https://github.com/1pitaph/bento_portofolio_template",
-      },
       {
         title: "Coastal Erosion",
         tagline: "> Portfolio _",
@@ -157,19 +219,22 @@ export const projectCategories: ProjectCategory[] = [
           ["/works/boli-tianyi/3.jpg"],
           ["/works/boli-tianyi/4.jpg"],
           ["/works/boli-tianyi/5.jpg"],
+          ["/works/boli-tianyi/6.jpg"],
+          ["/works/boli-tianyi/7.jpg"],
+          ["/works/boli-tianyi/8.jpg"],
         ],
-        pages: 6,
+        pages: 9,
       },
       {
         title: "杜仲公园策划",
         tagline: "> 北京 _",
         logo: "TreePine",
         imageGroups: [
-          ["/works/duzhong-park/1.jpg"],
+          ["/works/duzhong-park/1.png"],
           ["/works/duzhong-park/2.jpg"],
           ["/works/duzhong-park/3.jpg"],
-          ["/works/duzhong-park/4.jpg"],
-          ["/works/duzhong-park/5.jpg"],
+          ["/works/duzhong-park/4.png"],
+          ["/works/duzhong-park/5.png"],
         ],
         pages: 6,
       },

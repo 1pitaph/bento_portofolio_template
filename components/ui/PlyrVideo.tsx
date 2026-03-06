@@ -5,9 +5,11 @@ import { useEffect, useRef } from "react";
 export function PlyrVideo({
   src,
   maxHeight,
+  bottomAlign = false,
 }: {
   src: string;
   maxHeight?: string;
+  bottomAlign?: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -42,7 +44,7 @@ export function PlyrVideo({
           maxWidth: "100%",
           flexShrink: 1,
           display: "flex",
-          alignItems: "flex-end",
+          alignItems: bottomAlign ? "flex-end" : "center",
         } as React.CSSProperties
       }
     >

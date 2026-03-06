@@ -11,4 +11,6 @@ export const workVideoConfig: Record<string, { controls: boolean }> = {
   "/works/mochi/3.mp4": { controls: false },
   "/works/sketch-mcp/3.mp4": { controls: false },
   "/works/sketch-mcp/4.mp4": { controls: true },
+  "/works/sketchup-plugin/10.mp4": { controls: true },
+  "/works/aichuang-bridge/3.mp4": { controls: false },
 };

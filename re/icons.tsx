@@ -17,6 +17,9 @@ import {
   Building2,
   Building,
   Anchor,
+  Link,
+  Palette,
+  Smartphone,
 } from "lucide-react";
 import type { LucideProps } from "lucide-react";
 import type { ComponentType } from "react";
@@ -40,6 +43,9 @@ const iconMap: Record<string, ComponentType<LucideProps>> = {
   Building2,
   Building,
   Anchor,
+  Link,
+  Palette,
+  Smartphone,
 };
 
 export function WorkIcon({

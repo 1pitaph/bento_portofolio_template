@@ -232,6 +232,7 @@ export function WorkCardModal({
                                 key={src}
                                 src={src}
                                 maxHeight={caption ? "calc(100% - 2rem)" : "100%"}
+                                bottomAlign={!!caption}
                               />
                             ) : (
                               <video
