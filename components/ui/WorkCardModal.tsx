@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
@@ -25,11 +25,61 @@ export function WorkCardModal({
   mounted,
 }: WorkCardModalProps) {
   const [currentPage, setCurrentPage] = useState(1);
+  const wheelAccum = useRef(0);
+  const lastWheelTime = useRef(0);
 
   // Reset to page 1 whenever a different project is opened
   useEffect(() => {
     setCurrentPage(1);
+    wheelAccum.current = 0;
+    lastWheelTime.current = 0;
   }, [project?.title]);
+
+  // Wheel-based page navigation (desktop only, multi-page only)
+  useEffect(() => {
+    if (!project || compact) return;
+    const pageCount = project.pages ?? 1;
+    if (pageCount <= 1) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      // Ignore if hovering over the text content area (it has its own scroll)
+      const target = e.target as HTMLElement;
+      const textContent = target.closest('[class*="overflow-y-auto"]');
+      if (textContent) {
+        // Only handle wheel for page nav if the content is not scrollable or at its boundary
+        const el = textContent as HTMLElement;
+        const isAtTop = el.scrollTop <= 0;
+        const isAtBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+        if (!isAtTop && !isAtBottom) return;
+        if (e.deltaY < 0 && !isAtTop) return;
+        if (e.deltaY > 0 && !isAtBottom) return;
+      }
+
+      e.preventDefault();
+      
+      // Throttle: minimum 400ms between page changes
+      const now = Date.now();
+      if (now - lastWheelTime.current < 400) return;
+
+      wheelAccum.current += e.deltaY;
+      
+      // Threshold for page change
+      if (Math.abs(wheelAccum.current) >= 50) {
+        const direction = wheelAccum.current > 0 ? 1 : -1;
+        setCurrentPage((p) => {
+          const next = p + direction;
+          if (next < 1) return pageCount;
+          if (next > pageCount) return 1;
+          return next;
+        });
+        wheelAccum.current = 0;
+        lastWheelTime.current = now;
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, [project, compact]);
 
   if (!mounted) return null;
 
